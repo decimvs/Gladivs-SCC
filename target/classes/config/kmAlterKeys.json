@@ -1,0 +1,6 @@
+[
+    {"idNativeKey" : 99250, "nativeKeyConstantName" : "Control", "stringLang" : "km_control_both"},
+    {"idNativeKey" : 99251, "nativeKeyConstantName" : "Alt", "stringLang" : "km_alt_both"},
+    {"idNativeKey" : 99252, "nativeKeyConstantName" : "Shift", "stringLang" : "km_shift_both"},
+    {"idNativeKey" : 99253, "nativeKeyConstantName" : "Command", "stringLang" : "km_windows_command_both"}
+]

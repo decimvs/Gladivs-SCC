@@ -1,0 +1,13 @@
+[
+    {"parameterId" : 1, "parameterName" : "printScreenKey1", "parameterValue" : -1, "parameterValueType" : "int", "parameterString" : ""},
+    {"parameterId" : 2, "parameterName" : "printScreenKey2", "parameterValue" : -1, "parameterValueType" : "int", "parameterString" : ""},
+    {"parameterId" : 3, "parameterName" : "printScreenKey3", "parameterValue" : 3639, "parameterValueType" : "int", "parameterString" : "Print Screen"},
+    {"parameterId" : 4, "parameterName" : "refreshMonitorMoniaturesKey1", "parameterValue" : 99250, "parameterValueType" : "int", "parameterString" : "CTRL"},
+    {"parameterId" : 5, "parameterName" : "refreshMonitorMoniaturesKey2", "parameterValue" : -1, "parameterValueType" : "int", "parameterString" : ""},
+    {"parameterId" : 6, "parameterName" : "refreshMonitorMoniaturesKey3", "parameterValue" : 3639, "parameterValueType" : "int", "parameterString" : "Print Screen"},  
+    {"parameterId" : 7, "parameterName" : "screenshotsSavePath", "parameterValue" : "", "parameterValueType" : "String", "parameterString" : ""},
+    {"parameterId" : 8, "parameterName" : "checkServerForNewUpdates", "parameterValue" : 1, "parameterValueType" : "int", "parameterString" : ""},
+    {"parameterId" : 9, "parameterName" : "defaultUserLanguage", "parameterValue" : "en", "parameterValueType" : "String", "parameterString" : ""},
+    {"parameterId" : 10, "parameterName" : "autohideWindowWhenTakeScreenshot", "parameterValue" : 0, "parameterValueType" : "int", "parameterString" : ""},
+    {"parameterId" : 11, "parameterName" : "isTheFirstTimeThatAppRuns", "parameterValue" : 1, "parameterValueType" : "int", "parameterString" : ""}
+]

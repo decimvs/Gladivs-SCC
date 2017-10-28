@@ -1,0 +1,13 @@
+/*
+ * Empty Stylesheet file.
+ */
+
+.mainFxmlClass {
+    -fx-background-image: url("../icons/background-aboutus.jpg");
+    -fx-background-size: 450px 480px;
+    -fx-font-family: "Open Sans Bold";
+}
+
+#pronunciation {
+    -fx-font-family: Arial;
+}

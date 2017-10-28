@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch4jConfig>
+  <dontWrapJar>false</dontWrapJar>
+  <headerType>gui</headerType>
+  <jar>C:\Users\Guillermo\Documents\NetBeansProjects\GladivsSSC\target\GladivsSSC-0.6.jar</jar>
+  <outfile>C:\Users\Guillermo\Documents\NetBeansProjects\GladivsSSC\installer\GladivsSSC-0.6.exe</outfile>
+  <errTitle>Java SE not installed. Gladivs SSC needs Java to run. Note that a version 7 or higher is required.</errTitle>
+  <cmdLine></cmdLine>
+  <chdir>.</chdir>
+  <priority>normal</priority>
+  <downloadUrl>http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html</downloadUrl>
+  <supportUrl></supportUrl>
+  <stayAlive>false</stayAlive>
+  <restartOnCrash>false</restartOnCrash>
+  <manifest></manifest>
+  <icon>C:\Users\Guillermo\Documents\NetBeansProjects\GladivsSSC\src\main\resources\icons\icona_sense_sombra.ico</icon>
+  <jre>
+    <path></path>
+    <bundledJre64Bit>false</bundledJre64Bit>
+    <bundledJreAsFallback>false</bundledJreAsFallback>
+    <minVersion>1.7.0</minVersion>
+    <maxVersion></maxVersion>
+    <jdkPreference>preferJre</jdkPreference>
+    <runtimeBits>64/32</runtimeBits>
+  </jre>
+  <versionInfo>
+    <fileVersion>0.6.0.0</fileVersion>
+    <txtFileVersion>0.6 beta </txtFileVersion>
+    <fileDescription>Gladivs Simple Screen Capture</fileDescription>
+    <copyright>Guillermo Espert Carrasquer</copyright>
+    <productVersion>0.6.0.0</productVersion>
+    <txtProductVersion>0.6 beta</txtProductVersion>
+    <productName>Gladivs Simple Screen Capture</productName>
+    <companyName></companyName>
+    <internalName>Gladivs SSC</internalName>
+    <originalFilename>gladivsssc.exe</originalFilename>
+    <trademarks></trademarks>
+    <language>ENGLISH_US</language>
+  </versionInfo>
+</launch4jConfig>

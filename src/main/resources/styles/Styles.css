@@ -1,0 +1,138 @@
+.menu-button, .button, .combo-box {
+    -fx-background-color: linear-gradient(to top, #C2D4EC, #CDDAEC);
+    -fx-background-insets: 0, 1, 2;
+    -fx-background-radius: 5, 4, 3;
+    -fx-border-color: #5F5F5F;
+    -fx-border-insets: -1;
+    -fx-border-radius: 5, 4, 3;
+    -fx-border-width: 2px;
+}
+
+.combo-box {
+    -fx-background-color: #eceff1;
+    -fx-background-insets: 0, 1, 2;
+    -fx-background-radius: 5, 4, 3;
+    -fx-border-color: #5F5F5F;
+    -fx-border-insets: -1;
+    -fx-border-radius: 5, 4, 3;
+    -fx-border-width: 2px;
+}
+
+.hyperlink {
+    -fx-text-fill: #006600;
+    -fx-border-color: #000033;
+    -fx-border-width: 2px;
+}
+
+.menu-button:focused, .button:focused {
+    -fx-background-color: linear-gradient(to top, #C2D4EC, #CDDAEC);
+    -fx-background-insets: 0, 1, 2;
+    -fx-background-radius: 5, 4, 3;
+}
+
+.menu-button:hover, .button:hover {
+    -fx-background-color: linear-gradient(to top, #ECDAC2, #ECDFCD);
+    -fx-background-insets: 0, 1, 2;
+    -fx-background-radius: 5, 4, 3;
+}
+
+.scroll-pane:focused {
+    -fx-background-color: -fx-outer-border, -fx-inner-border, -fx-body-color;
+    -fx-background-insets: 0, 1, 2;
+    -fx-background-radius: 5, 4, 3;
+}
+
+.toolbarGradient {
+    -fx-background-color: linear-gradient(to top, #5F5F5F, #EAEAEA);
+    -fx-text-fill: linear-gradient(to top, #EAEAEA, #5F5F5F);
+}
+
+.mainAnchorPane {
+    -fx-background-color: white;
+}
+
+.stepPanes {
+    -fx-background-color: linear-gradient(to top, #C2D4EC, #CDDAEC, white);
+    -fx-border-color: #5F5F5F;
+    -fx-border-width: 2px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+
+.text {
+    -fx-font-family: "Open Sans Bold";
+}
+
+#AnchorPane {
+    -fx-font-family: "Open Sans Bold";
+}
+
+.modalButton {
+    -fx-background-insets: 0, 1, 2;
+    -fx-background-radius: 5, 4, 3;
+    -fx-border-color: #5F5F5F;
+    -fx-border-insets: -1;
+    -fx-border-radius: 5, 4, 3;
+    -fx-border-width: 2px;
+    -fx-font-weight: bold;
+}
+.modalButtonBlue {
+    -fx-background-color: #01579b;
+    -fx-text-fill: #ffffff;
+}
+
+.modalButtonBlue:focused {
+    -fx-background-color: #01579b;
+    -fx-text-fill: #ffffff;
+}
+
+.modalButtonBlue:hover {
+    -fx-background-color: #00b0ff;
+    -fx-text-fill: #ffffff;
+}
+
+.modalButtonRed {
+    -fx-background-color: #d32f2f;
+    -fx-text-fill: #ffffff;
+}
+
+.modalButtonRed:focused {
+    -fx-background-color: #d32f2f;
+    -fx-text-fill: #ffffff;
+}
+
+.modalButtonRed:hover {
+    -fx-background-color: #ff5252;
+    -fx-text-fill: #ffffff;
+}
+
+.modalButtonGreen {
+    -fx-background-color: #81c784;
+    -fx-text-fill: #ffffff;
+}
+
+.modalButtonGreen:focused {
+    -fx-background-color: #81c784;
+    -fx-text-fill: #ffffff;
+}
+
+.modalButtonGreen:hover {
+    -fx-background-color: #c5e1a5;
+    -fx-text-fill: #ffffff;
+}
+
+.labelKeys {
+    -fx-background-color: #000000;
+    -fx-text-fill: #ffffff;
+    -fx-background-radius: 3;
+}
+
+.labelPlus {
+    -fx-font-weight: bold;
+    -fx-font-size: 1.5em;
+}
+
+.labelTitle {
+    -fx-font-size: 1.3em;
+    -fx-font-weight: normal;
+}
