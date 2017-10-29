@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2016 Guillermo Espert Carrasquer [gespert@yahoo.es]
+ * Copyright (C) 2016 - 2017 Guillermo Espert Carrasquer [gespert@yahoo.es]
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,85 +17,26 @@
 
 package com.gladivs.gladivsssc;
 
-import com.gladivs.gladivsssc.Configuration.Configuration;
-import javafx.scene.text.Font;
-import java.io.IOException;
+import com.gladivs.gladivsssc.Instances.JNativeHookInstance;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.image.Image;
+import javafx.application.Platform;
 import javafx.stage.Stage;
 
 
 public class MainApp extends Application {
     
-    MainController mController;
-    
-    public final String APP_VERSION = "0.6";
-    public final String APP_NAME = "Gladivs Simple Screen Capture";
-    public final String APP_AUTHOR = "Guillermo Espert Carrasquer";
-    
-    private boolean isCTRLKeyPressed = false;
-    private NativeKeyListener nkl;
-    private Stage mainStage;
-    private final Configuration configuration;
-    
-    public MainApp()
-    {
-        configuration = new Configuration();
-    }
-    
     @Override
     public void start(Stage stage) throws Exception 
     {  
-        final FXMLLoader loader = new FXMLLoader(
-            getClass().getResource("/fxml/MainScene.fxml")
-        );
+        //Esta opció permet tancar la aplicació quant no queden finestres obertes.
+        //Per a la nostra aplicació no interesa este comportament, i el fixem a false.
+        //Ara serà necessari cridar implicitament al mètode: Platform.exit(), per a tancar
+        //la aplicació.
+        Platform.setImplicitExit(false);
         
-        Parent root;
-        
-        try {
-            root = (Parent) loader.load();
-            
-            Font.loadFont(getClass().getResourceAsStream("/fonts/OpenSans-Bold.ttf"), 16);
-
-            mController = loader.getController();
-            
-            Scene scene = new Scene(root);
-            scene.getStylesheets().add("/styles/Styles.css");
-
-            stage.setTitle("Gladivs Simple Screen Capture 0.6 BETA");
-            stage.getIcons().add(new Image(getClass().getResourceAsStream("/icons/icona_sense_sombra.png")));
-            stage.setScene(scene);
-            stage.setResizable(false);
-
-            nkl = new NativeKeyListener("jNative Hook", mController, configuration);
-            nkl.start();
-
-            //Set this stage in controller
-            mController.setPrimaryStage(stage);
-
-            //Set this object instance in MainController
-            mController.setMainAppInstance(this);
-            
-            //Set Configuration values to MainController
-            mController.setConfigurationSettings(configuration);
-
-            //Perform post initialization actions in controller
-            mController.postInicilizationActions();
-
-            stage.show();
-            
-            mainStage = stage;
-            
-        } catch (IOException ex) {
-            System.out.println(ex.getMessage());
-            ex.printStackTrace();
-            
-            return;
-        }
+        //Iniciem la aplicació.
+        App.Start();
     }
 
     /**
@@ -117,13 +58,9 @@ public class MainApp extends Application {
     @Override
     public void stop()
     {
-        nkl.stop();
+        //Finalitzem el sistema de control d'events del sistema.
+        JNativeHookInstance.stop();
+        
         System.exit(0);
     }
-    
-    /**
-     * Get the main Scene object instance
-     * @return 
-     */
-    public Stage getMainStage(){ return mainStage; }
 }

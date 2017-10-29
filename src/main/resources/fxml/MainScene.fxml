@@ -9,7 +9,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="mainAnchorPane" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gladivs.gladivsssc.MainController">
+<AnchorPane id="AnchorPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="mainAnchorPane" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gladivs.gladivsssc.GUI.Controllers.MainController">
    <children>
       <BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <bottom>
@@ -54,6 +54,7 @@
                                  </graphic>
                                  <items>
                                     <MenuItem fx:id="mnitKeyboardSettings" mnemonicParsing="false" text="Keyboard settings" />
+                                    <MenuItem fx:id="mnitSettings" mnemonicParsing="false" text="Settings" />
                                     <CheckMenuItem fx:id="chmnitCheckForUpdates" mnemonicParsing="false" text="Check for new updates" />
                                     <CheckMenuItem fx:id="chmnitAutohideWindow" mnemonicParsing="false" text="Auto-hide window" />
                                     <Menu fx:id="mnLangSettings" mnemonicParsing="false" text="Language">
