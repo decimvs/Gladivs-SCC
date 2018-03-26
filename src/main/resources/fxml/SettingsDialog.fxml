@@ -45,11 +45,11 @@
                                             </rowConstraints>
                                              <children>
                                                 <Label text="Captura de pantalla" />
-                                                <Label text="Actualitzar miniatures" GridPane.rowIndex="1" />
+                                                <Label text="Recarregar miniatures" GridPane.rowIndex="1" />
                                                 <Button fx:id="btnModificarImprPant" mnemonicParsing="false" text="Modificar" GridPane.columnIndex="2" />
-                                                <Button mnemonicParsing="false" text="Modificar" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                                <Button fx:id="btnModificarRecarregarMiniatures" mnemonicParsing="false" text="Modificar" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                                                 <Label fx:id="lblImprPantalla" text="Label" GridPane.columnIndex="1" />
-                                                <Label text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                <Label fx:id="lblRecarregarMiniatures" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                              </children>
                                              <VBox.margin>
                                                 <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
@@ -66,6 +66,26 @@
               </tabs>
             </TabPane>
          </center>
+         <bottom>
+            <HBox alignment="CENTER_RIGHT" prefHeight="35.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Button fx:id="btnAccept" mnemonicParsing="false" text="Aceptar">
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button fx:id="btnApply" mnemonicParsing="false" text="Aplicar">
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button fx:id="btnCancel" mnemonicParsing="false" text="Cancelar" />
+               </children>
+               <padding>
+                  <Insets left="10.0" right="10.0" />
+               </padding>
+            </HBox>
+         </bottom>
       </BorderPane>
    </children>
 </AnchorPane>

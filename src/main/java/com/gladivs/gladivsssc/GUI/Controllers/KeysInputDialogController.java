@@ -16,8 +16,10 @@
  */
 package com.gladivs.gladivsssc.GUI.Controllers;
 
+import com.gladivs.gladivsssc.Configuration.KeyboardSettings;
 import com.gladivs.gladivsssc.Events.EventsManager.GlobalKeysListener;
 import com.gladivs.gladivsssc.Instances.GlobalListenerInstance;
+import com.gladivs.gladivsssc.Instances.WindowsInstances;
 import com.gladivs.gladivsssc.Keyboard.ManageKeys;
 import java.net.URL;
 import java.util.ArrayList;
@@ -32,7 +34,8 @@ import javafx.scene.control.Label;
 import org.jnativehook.keyboard.NativeKeyEvent;
 
 /**
- * FXML Controller class
+ * Proporciona un dialog que permet a l'usuari introduïr una combinació
+ * de tecles.
  *
  * @author Guillermo Espert Carrasquer <gespert at yahoo dot es>
  */
@@ -40,6 +43,8 @@ public class KeysInputDialogController implements Initializable, GlobalKeysListe
     
     private ArrayList<Integer> keysPressed = new ArrayList<>();
     private SettingsDialogController sdController;
+    private Label parentKeysLabel;
+    private KeyboardSettings kbSetting;
     
     @FXML
     private Label lblTecles;
@@ -98,6 +103,29 @@ public class KeysInputDialogController implements Initializable, GlobalKeysListe
     {
         lblTecles.setText(text);
     }
+    
+    /**
+     * S'usa per a establir una referència al Label que conté 
+     * la combinació de tecles. Una volta finalitzada la definició
+     * de les tecles per part de l'usuari, s'usa esta variable per a establir
+     * el valor que haja definit l'usuari en la finestra de configuració.
+     * 
+     * @param lb 
+     */
+    public void setParentKeysLabel(Label lb)
+    {
+        this.parentKeysLabel = lb;
+    }
+    
+    /**
+     * Assingna el Setting que estem modificant o definint en este moment.
+     * És necessari per a permetre desar els nous valors.
+     * @param kbSetting 
+     */
+    public void setKeyboardSetting(KeyboardSettings kbSetting)
+    {
+        this.kbSetting = kbSetting;
+    }
 
     @Override
     public void onGlobalKeyTyped(NativeKeyEvent nke) {
@@ -108,12 +136,17 @@ public class KeysInputDialogController implements Initializable, GlobalKeysListe
     {
         if(sdController != null)
         {
-            sdController.setCombinationKeys(keysPressed);
+            kbSetting.storeKeyCombination(keysPressed);
+            sdController.addSettingToUpdatablesList(kbSetting);
+            sdController.setCombinationKeys(keysPressed, parentKeysLabel);
         }
         
         //Important!!! és necessari cridar per a traure el listener, si no
         //pot seguir actuant encara que no el necessitem.
         GlobalListenerInstance.getInstance().removeListener(this);
+        
+        //Destruïm l'instància per tal d'obligar a crear-ne una de nova cada volta
+        WindowsInstances.destroyKeysInputDialogWindowCreator();
         
         btnCancelar.getScene().getWindow().hide();
     }

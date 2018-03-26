@@ -16,8 +16,9 @@
  */
 package com.gladivs.gladivsssc.Instances;
 
-import com.gladivs.gladivsssc.GUI.MainWindowCreator;
-import javafx.stage.Stage;
+import com.gladivs.gladivsssc.GUI.WindowCreators.KeysInputDialogWindowCreator;
+import com.gladivs.gladivsssc.GUI.WindowCreators.MainWindowCreator;
+import com.gladivs.gladivsssc.GUI.WindowCreators.SettingsDialogWindowCreator;
 
 /**
  *
@@ -26,6 +27,10 @@ import javafx.stage.Stage;
 public class WindowsInstances {
     
     private static MainWindowCreator msCreator;
+    
+    private static SettingsDialogWindowCreator sdCreator;
+    
+    private static KeysInputDialogWindowCreator kidCreator;
     
     /**
      * Retorna un objecte que ens permet recuperar el Stage i el Controlador
@@ -42,5 +47,57 @@ public class WindowsInstances {
         }
         
         return msCreator;
+    }
+    
+    /**
+     * Retorna una instància de SettingsDialogWindowCreator, que conté tant
+     * el Stage com el Controller de la finestra.
+     * @return 
+     */
+    public static SettingsDialogWindowCreator getSettingsDialog()
+    {
+        if(sdCreator == null)
+        {
+            sdCreator = new SettingsDialogWindowCreator();
+            sdCreator.createNewWindow();
+        }
+        
+        return sdCreator;
+    }
+    
+    /**
+     * Retorna una instància de KeysInputDialogWindowCreator, que conté tant
+     * el Stage com el Controller de la finestra.
+     * @return 
+     */
+    public static KeysInputDialogWindowCreator getKeyInputDialog()
+    {
+        if(kidCreator == null)
+        {
+            kidCreator = new KeysInputDialogWindowCreator();
+            kidCreator.createNewWindow();
+        }
+        
+        return kidCreator;
+    }
+    
+    /*=============================================
+                    DESTROYERS
+    ===============================================*/
+    
+    /**
+     * Desintància SettingsDialogWindowCreator
+     */
+    public static void destroySettingsDialogWindowCreator()
+    {
+        sdCreator = null;
+    }
+    
+    /**
+     * Desistància KeysInputDialogWindowCreator
+     */
+    public static void destroyKeysInputDialogWindowCreator()
+    {
+        kidCreator = null;
     }
 }

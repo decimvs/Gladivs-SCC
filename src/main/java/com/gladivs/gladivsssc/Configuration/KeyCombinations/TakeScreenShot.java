@@ -1,5 +1,7 @@
 /*
- * Copyright (C) 2017 Guillermo Espert Carrasquer
+ * Copyright (C) 2018 Guillermo Espert Carrasquer
+ *
+ * This file is part of Gladivs Simple Screen Capture
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -14,25 +16,25 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.gladivs.gladivsssc.Instances;
+package com.gladivs.gladivsssc.Configuration.KeyCombinations;
 
-import com.gladivs.gladivsssc.Configuration.Configuration;
+import com.gladivs.gladivsssc.Configuration.KeyboardSettings;
+import java.util.List;
 
 /**
  *
  * @author Guillermo Espert Carrasquer <gespert at yahoo dot es>
  */
-public class ConfigurationInstance {
-    
-    private static Configuration configuration;
-    
-    public static Configuration getConfiguration()
-    {
-        if(configuration == null)
-        {
-            configuration = new Configuration();
-        }
+public class TakeScreenShot extends KeyboardSettings {
 
-            return configuration;
+    @Override
+    public void storeKeyCombination(List<Integer> keys) {
+        setKeysValue(KeyboardSettings.TAKE_SCREENSHOT, keys, KeyboardSettings.TAKE_SCREENSHOT_DEF);
     }
+
+    @Override
+    public List<Integer> getKeyCombinationData() {
+        return getKeysValue(KeyboardSettings.TAKE_SCREENSHOT, KeyboardSettings.TAKE_SCREENSHOT_DEF);
+    }
+    
 }

@@ -613,29 +613,11 @@ public class MainController implements Initializable {
         }
     };
     
+    /**
+     * Obrir la finestra de configuració (Settings)
+     */
     private EventHandler<ActionEvent> onSettingsMenuActionEvent = (event)-> {
-        Parent root;
-        
-        try {
-            final FXMLLoader loader = new FXMLLoader(
-                getClass().getResource("/fxml/SettingsDialog.fxml")
-            );
-
-            //Load FXML file
-            root = (Parent) loader.load();
-
-            //Configure and show window
-            Stage stage = new Stage();
-            stage.setTitle("Settings");
-            stage.getIcons().add(new Image(getClass().getResourceAsStream("/icons/icona_sense_sombra.png")));
-            stage.setScene(new Scene(root));
-            stage.initModality(Modality.WINDOW_MODAL);
-            stage.initOwner(WindowsInstances.getMainWindow().getStage());
-            stage.show();
-            
-        } catch (IOException ex) {
-            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        WindowsInstances.getSettingsDialog().getStage().show();
     };
     
     private EventHandler<ActionEvent> onButtonAboutUsActionEvent = new EventHandler<ActionEvent>() {

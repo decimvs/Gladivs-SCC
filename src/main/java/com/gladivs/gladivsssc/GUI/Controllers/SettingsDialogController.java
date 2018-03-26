@@ -16,26 +16,20 @@
  */
 package com.gladivs.gladivsssc.GUI.Controllers;
 
+import com.gladivs.gladivsssc.Configuration.KeyCombinations.TakeScreenShot;
+import com.gladivs.gladivsssc.Configuration.KeyboardSettings;
 import com.gladivs.gladivsssc.Instances.WindowsInstances;
-import java.io.IOException;
+import com.gladivs.gladivsssc.Configuration.Settings;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 import org.jnativehook.keyboard.NativeKeyEvent;
 
 /**
@@ -44,22 +38,43 @@ import org.jnativehook.keyboard.NativeKeyEvent;
  * @author Guillermo Espert Carrasquer <gespert at yahoo dot es>
  */
 public class SettingsDialogController implements Initializable {
-
-    @FXML
-    private TextField txtKeys;
     
     @FXML
-    private Label lblImprPantalla;
+    private Label lblImprPantalla, lblRecarregarMiniatures;
     
     @FXML
-    private Button btnModificarImprPant;
+    private Button btnModificarImprPant, btnModificarRecarregarMiniatures;
+    
+    @FXML
+    private Button btnCancel, btnApply, btnAccept;
+    
+    private List<Settings> updatableChanges;
+    
+    private Settings takeScreenShot;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        updatableChanges = new ArrayList<>();
+        
         btnModificarImprPant.addEventHandler(ActionEvent.ACTION, onBtnModificarImprPantAction);
+        btnModificarRecarregarMiniatures.addEventHandler(ActionEvent.ACTION, onBtnModificarRecarregarMiniaturesAction);
+        btnApply.addEventHandler(ActionEvent.ACTION, onBtnApplyAction);
+        
+        loadConfiguredCombinationKeys();
     }
     
-    public void setCombinationKeys(ArrayList<Integer> keysPressed)
+    /**
+     * Carrega les configuracions de tecles en cada label corresponent
+     */
+    private void loadConfiguredCombinationKeys()
+    {
+        takeScreenShot = new TakeScreenShot();
+        
+        setCombinationKeys(((KeyboardSettings) takeScreenShot).getKeyCombinationData(), lblImprPantalla);
+        //setCombinationKeys(KeyboardSettings.getRefreshMonitorKeys(), lblRecarregarMiniatures);
+    }
+    
+    public void setCombinationKeys(List<Integer> keysPressed, Label label)
     {
         if(keysPressed.size() > 0)
         {
@@ -68,54 +83,56 @@ public class SettingsDialogController implements Initializable {
             
             for(Integer i : keysPressed)
             {
-                String concat;
-                
-                if(iteration != 1)
+                if(i != null)
                 {
-                    concat = " + ";
-                }
-                else
-                {
-                    concat = "";
-                }
+                    String concat;
                 
-                keys += concat + NativeKeyEvent.getKeyText(i);
+                    if(iteration != 1)
+                    {
+                        concat = " + ";
+                    }
+                    else
+                    {
+                        concat = "";
+                    }
+                
+                    keys += concat + NativeKeyEvent.getKeyText(i);
+                }
                 
                 iteration++;
             }
             
-            keysPressed.clear();
-            
-            lblImprPantalla.setText(keys);
+            label.setText(keys);
         }
     }
     
-    private EventHandler<ActionEvent> onBtnModificarImprPantAction = (evt) -> {
-        Parent root;
+    public void addSettingToUpdatablesList(Settings st)
+    {
+        if(updatableChanges.contains(st))
+        {
+            updatableChanges.remove(st);
+        }
         
-        try {
-            final FXMLLoader loader = new FXMLLoader(
-                getClass().getResource("/fxml/KeysInputDialog.fxml")
-            );
-
-            //Load FXML file
-            root = (Parent) loader.load();
-            
-            KeysInputDialogController kidController = loader.getController();
-            kidController.setSettingsDialogController(this);
-
-            //Configure and show window
-            Stage stage = new Stage();
-            stage.setTitle("Introduïr combinació de tecles");
-            stage.getIcons().add(new Image(getClass().getResourceAsStream("/icons/icona_sense_sombra.png")));
-            stage.setScene(new Scene(root));
-            stage.initModality(Modality.WINDOW_MODAL);
-            stage.initOwner(WindowsInstances.getMainWindow().getStage());
-            stage.show();
-
-        } catch (IOException ex) {
-            Logger.getLogger(MainController.class.getName()).log(Level.SEVERE, null, ex);
+        updatableChanges.add(st);
+    }
+    
+    private EventHandler<ActionEvent> onBtnApplyAction = (evt) -> {
+        for(Settings s : updatableChanges)
+        {
+            s.updateSettings();
         }
     };
+    
+    private EventHandler<ActionEvent> onBtnModificarImprPantAction = (evt) -> {
+        
+        WindowsInstances.getKeyInputDialog().getController().setParentKeysLabel(lblImprPantalla);
+        WindowsInstances.getKeyInputDialog().getController().setKeyboardSetting((KeyboardSettings)takeScreenShot);
+        WindowsInstances.getKeyInputDialog().getStage().show();
+    };
 
+    private EventHandler<ActionEvent> onBtnModificarRecarregarMiniaturesAction = (evt) -> {
+        
+        WindowsInstances.getKeyInputDialog().getController().setParentKeysLabel(lblRecarregarMiniatures);
+        WindowsInstances.getKeyInputDialog().getStage().show();
+    };
 }

@@ -8,7 +8,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="193.0" prefWidth="300.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="com.gladivs.gladivsssc.GUI.Controllers.KeysInputDialogController">
+<AnchorPane id="AnchorPane" prefHeight="193.0" prefWidth="300.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gladivs.gladivsssc.GUI.Controllers.KeysInputDialogController">
     <stylesheets>
         <URL value="@/styles/Styles.css" />
     </stylesheets>
@@ -20,6 +20,6 @@
          </font>
       </Text>
       <Button fx:id="btnCancelar" layoutX="224.0" layoutY="154.0" mnemonicParsing="false" text="Cancelar" />
-      <Label fx:id="lblTecles" layoutX="14.0" layoutY="107.0" prefHeight="17.0" prefWidth="76.0" />
+      <Label fx:id="lblTecles" layoutX="14.0" layoutY="107.0" prefHeight="17.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" />
    </children>
 </AnchorPane>

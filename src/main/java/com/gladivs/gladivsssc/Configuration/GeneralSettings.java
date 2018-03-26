@@ -1,6 +1,8 @@
 /*
  * Copyright (C) 2017 Guillermo Espert Carrasquer
  *
+ * This file is part of Gladivs Simple Screen Capture
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -14,25 +16,21 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.gladivs.gladivsssc.Instances;
-
-import com.gladivs.gladivsssc.Configuration.Configuration;
+package com.gladivs.gladivsssc.Configuration;
 
 /**
  *
  * @author Guillermo Espert Carrasquer <gespert at yahoo dot es>
  */
-public class ConfigurationInstance {
+public class GeneralSettings extends SettingsBase {
     
-    private static Configuration configuration;
+    private static final String appRoot = "/com/gladivsssc/generalsettings";
     
-    public static Configuration getConfiguration()
-    {
-        if(configuration == null)
-        {
-            configuration = new Configuration();
-        }
-
-            return configuration;
-    }
+    /*********************************
+     *          GETTERS
+     ********************************/
+    
+    /*********************************
+     *          SETTERS
+     ********************************/
 }

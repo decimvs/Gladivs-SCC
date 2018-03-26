@@ -1,6 +1,8 @@
 /*
  * Copyright (C) 2017 Guillermo Espert Carrasquer
  *
+ * This file is part of Gladivs Simple Screen Capture
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -14,25 +16,30 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.gladivs.gladivsssc.Instances;
+package com.gladivs.gladivsssc.Configuration;
 
-import com.gladivs.gladivsssc.Configuration.Configuration;
+import java.util.List;
 
 /**
  *
  * @author Guillermo Espert Carrasquer <gespert at yahoo dot es>
  */
-public class ConfigurationInstance {
+public class Settings {
     
-    private static Configuration configuration;
+    protected String separator = ",";
     
-    public static Configuration getConfiguration()
+    protected List<Settings> updatableSettings;
+    
+    /**
+     * Es un mètode que deu ser sobreescrit en cada classe filla
+     * per a permetre una actualització de les configuracions de forma
+     * generalitzada i global amb només una acció.
+     */
+    public void updateSettings(){}
+    
+    protected void addUpdatableSettings(Settings e)
     {
-        if(configuration == null)
-        {
-            configuration = new Configuration();
-        }
-
-            return configuration;
+        updatableSettings.add(e);
     }
+   
 }
