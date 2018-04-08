@@ -2,21 +2,21 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.gladivs</groupId>
-    <artifactId>GladivsSSC</artifactId>
+    <groupId>org.gespert</groupId>
+    <artifactId>Gladivs</artifactId>
     <version>0.7</version>
     <packaging>jar</packaging>
 
-    <name>GladivsSSC</name>
+    <name>Gladivs</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <mainClass>com.gladivs.gladivsssc.MainApp</mainClass>
+        <mainClass>org.gespert.gladivs.MainApp</mainClass>
     </properties>
 
     <organization>
         <!-- Used as the 'Vendor' for JNLP generation -->
-        <name>Your Organisation</name>
+        <name>Guillermo Espert Carrasquer</name>
     </organization>
 
     <build>
@@ -111,9 +111,14 @@
             <version>2.6.5</version>
         </dependency>
         <dependency>
+            <groupId>org.hashids</groupId>
+            <artifactId>hashids</artifactId>
+            <version>1.0.3</version>
+        </dependency>
+        <dependency>
             <groupId>com.1stleg</groupId>
             <artifactId>jnativehook</artifactId>
-            <version>2.1.0</version>
+            <version>2.0.3</version>
         </dependency>
     </dependencies>
 </project>
