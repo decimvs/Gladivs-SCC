@@ -16,6 +16,7 @@
  */
 package org.gespert.gladivs.GUI.Controllers;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,14 +25,16 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import org.gespert.gladivs.Instances.KeysListener;
+import javafx.scene.control.TextField;
+import javafx.stage.DirectoryChooser;
 import org.gespert.gladivs.Instances.SettingsInstance;
 import org.gespert.gladivs.Instances.Windows;
 import org.gespert.gladivs.Settings.KeyboardSettings;
 import org.gespert.gladivs.Settings.Settings;
-import org.jnativehook.GlobalScreen;
 import org.jnativehook.keyboard.NativeKeyEvent;
 
 /**
@@ -47,10 +50,14 @@ public class SettingsDialogController implements Initializable {
     private Button btnModificarImprPant, btnModificarRecarregarMiniatures;
     
     @FXML
-    private Button btnCancel, btnApply, btnAccept;
+    private Button btnCancel, btnApply, btnAccept, btnSelectDefaultDirectory;
+    
+    @FXML
+    private TextField txtDefaultDirectory;
     
     private List<Settings> updatableChanges;
     private KeyboardSettings kbSettings = SettingsInstance.getKeyboardSettings();
+    private String oldDefaultDirectoryValue;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -59,19 +66,32 @@ public class SettingsDialogController implements Initializable {
         btnModificarImprPant.addEventHandler(ActionEvent.ACTION, onBtnModificarImprPantAction);
         btnModificarRecarregarMiniatures.addEventHandler(ActionEvent.ACTION, onBtnModificarRecarregarMiniaturesAction);
         btnApply.addEventHandler(ActionEvent.ACTION, onBtnApplyAction);
+        btnCancel.addEventHandler(ActionEvent.ACTION, onBtnCancelAction);
+        btnAccept.addEventHandler(ActionEvent.ACTION, onBtnAcceptAction);
+        btnSelectDefaultDirectory.addEventHandler(ActionEvent.ACTION, onBtnSelectDefaultDirectory);
         
-        loadConfiguredCombinationKeys();
+        loadCurrentSettingsValues();
     }
     
     /**
-     * Carrega les configuracions de tecles en cada label corresponent
+     * Obté els paràmetres i carrega els valors en els camps corresponents.
      */
-    private void loadConfiguredCombinationKeys()
-    {        
+    private void loadCurrentSettingsValues()
+    {
+        //Establir les tecles actuals
         setCombinationKeys(kbSettings.getTakeScrenShotKeys(), lblImprPantalla);
         setCombinationKeys(kbSettings.getCaptureRegionKeys(), lblRecarregarMiniatures);
+        
+        String directoryValue = SettingsInstance.getGeneralSettings().getUserSelectedImagesSavePath();
+        txtDefaultDirectory.setText(directoryValue);
+        oldDefaultDirectoryValue = directoryValue;
     }
     
+    /**
+     * Crea la visualització de les tecles seleccionades.
+     * @param keysPressed
+     * @param label 
+     */
     public void setCombinationKeys(List<Integer> keysPressed, Label label)
     {
         if(keysPressed.size() > 0)
@@ -104,6 +124,10 @@ public class SettingsDialogController implements Initializable {
         }
     }
     
+    /**
+     * Afegeix el setting passat a la llista de paràmetres que seràn actulitzats.
+     * @param st 
+     */
     public void addSettingToUpdatablesList(Settings st)
     {
         if(updatableChanges.contains(st))
@@ -114,11 +138,139 @@ public class SettingsDialogController implements Initializable {
         updatableChanges.add(st);
     }
     
-    private EventHandler<ActionEvent> onBtnApplyAction = (evt) -> {
+    /**
+     * Desa tots el settings continguts dins de la llista de settings canviats.
+     * Una volta finalitzada l'operació, buida la llista de settings canviats.
+     */
+    private void saveSettings()
+    {
+        //Abans de desar els paràmetres, verifiquem si el directory predeterminat
+        //de desat de les imatges ha canviat o si ès vàlid.
+        saveDefaultDirectory();
+        
         for(Settings s : updatableChanges)
         {
             s.saveSettings();
         }
+        
+        updatableChanges.clear();
+    }
+    
+    /**
+     * Verifica per un costat la validesa del valor introduït al camp de text.
+     * Si el valor no és una direcció vàlida, mostrarà el cercador de directoris
+     * per a que l'usuari especifique una direcció vàlida.
+     * 
+     * Per altre costat, es verifica si el valor del camp ha canviat respecte
+     * del valor que tenía quant s'ha carregat el formulari. Si el valor ha canviat
+     * es desa el nou valor en la configuració.
+     */
+    private void saveDefaultDirectory()
+    {
+        File selectedDir = new File(txtDefaultDirectory.getText());
+        
+        if(txtDefaultDirectory.getText() == null || !verifyDefaultDirectory(selectedDir))
+        {
+            showErrorAlertDefaultDirectory();
+            showDirectoryChooser(null);
+        }
+        
+        if(!txtDefaultDirectory.equals(oldDefaultDirectoryValue))
+        {
+            SettingsInstance.getGeneralSettings().setUserSelectedImagesSavePath(selectedDir.getAbsolutePath());
+            
+            addSettingToUpdatablesList(SettingsInstance.getGeneralSettings());
+        }
+    }
+    
+    /**
+     * Verifica si el directori passat es un directori vàlid.
+     * Retorna true si es un directori vàlid o false en cas contrari.
+     * @param path
+     * @return 
+     */
+    private boolean verifyDefaultDirectory(File path)
+    {  
+        if(path.exists() && path.canWrite())  return true;
+        
+        return false;
+    }
+    
+    private void showErrorAlertDefaultDirectory()
+    {
+        Alert error = new Alert(AlertType.ERROR);
+        error.setTitle("Directory not valid");
+        error.setHeaderText(null);
+        error.setContentText("The choosen directory is a invalid path. Please select another directory.");
+        error.showAndWait();
+    }
+    
+    /**
+     * Mostra un seleccionador de directoris. Si es pasa una ruta vàlida, es 
+     * mostrarà com a directori d'inici, si no, es mostrarà la carpeta personal
+     * de l'usuari.
+     * El directori seleccionat serà verificat. Si este és vàlid, finalitza la selecció
+     * i es retorna un objecte File. Si el directori no és vàlid, es mostra el
+     * seleccionador de nou per a corregir el problema.
+     * @param path
+     * @return 
+     */
+    private File showDirectoryChooser(String path)
+    {
+        DirectoryChooser dch = new DirectoryChooser();
+        File userHome = new File(System.getProperties().getProperty("user.home"));
+        File selectedPath;
+        
+        if(path != null)
+        {
+            File startPath = new File(path);
+            
+            if(startPath.exists())
+            {
+                dch.setInitialDirectory(startPath);
+            }
+            else
+            {
+                dch.setInitialDirectory(userHome);
+            }
+        }
+        else
+        {
+            dch.setInitialDirectory(userHome);
+        }
+        
+        selectedPath = dch.showDialog(Windows.getSettingsDialog().getStage());
+        
+        if(!verifyDefaultDirectory(selectedPath))
+        {
+            showErrorAlertDefaultDirectory();
+            showDirectoryChooser(dch.getInitialDirectory().getAbsolutePath());
+        }
+        
+        txtDefaultDirectory.setText(selectedPath.getAbsolutePath());
+        
+        return selectedPath;
+    }
+    
+    private EventHandler<ActionEvent> onBtnSelectDefaultDirectory = (evt) -> {
+    
+        txtDefaultDirectory.setText(showDirectoryChooser(txtDefaultDirectory.getText()).getAbsolutePath());
+    };
+    
+    private EventHandler<ActionEvent> onBtnAcceptAction = (evt) -> {
+        saveSettings();
+        Windows.getSettingsDialog().getStage().close();
+        Windows.destroySettingsWindowCreator();
+    };
+    
+    private EventHandler<ActionEvent> onBtnCancelAction = (evt) -> {
+        updatableChanges.clear();
+        Windows.getSettingsDialog().getStage().close();
+        Windows.destroySettingsWindowCreator();
+    };
+    
+    private EventHandler<ActionEvent> onBtnApplyAction = (evt) -> {
+        saveSettings();
     };
     
     private EventHandler<ActionEvent> onBtnModificarImprPantAction = (evt) -> {

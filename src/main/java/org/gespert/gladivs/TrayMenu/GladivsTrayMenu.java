@@ -27,6 +27,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javafx.application.Platform;
 import org.gespert.gladivs.Instances.Windows;
+import org.gespert.gladivs.Screenshots.CaptureRegion;
 
 /**
  *
@@ -68,12 +69,13 @@ public class GladivsTrayMenu {
         tray.remove(trayIcon);
     }
     
+    /**
+     * Genera el popup menú
+     * @return 
+     */
     private PopupMenu getPopupMenu()
     {
         PopupMenu popup = new PopupMenu();
-        
-        //MenuItem Separator
-        MenuItem separatorItem = new MenuItem("-");
      
         //MenuItem Open GladivsSSC Window
         MenuItem settingsWindowItem = new MenuItem("Settings");
@@ -84,11 +86,49 @@ public class GladivsTrayMenu {
         exitItem.addActionListener(exitListener);
         
         //Afegir elements al popup
+        popup.add(getSelectPredefinedAreaPopupMenu());
+        popup.add(getSeparatorItemMenu());
         popup.add(settingsWindowItem);
-        popup.add(separatorItem);
+        popup.add(getHelpMenuItem());
+        
+        popup.add(getAboutUsMenuItem());
+        popup.add(getSeparatorItemMenu());
         popup.add(exitItem);
         
         return popup;
+    }
+    
+    private MenuItem getSeparatorItemMenu()
+    {
+        return new MenuItem("-");
+    }
+    
+    private MenuItem getAboutUsMenuItem()
+    {
+        MenuItem aboutUs = new MenuItem("About Us");
+        aboutUs.addActionListener(aboutUsDialogListener);
+        
+        return aboutUs;
+    }
+    
+    private MenuItem getHelpMenuItem()
+    {
+        MenuItem help = new MenuItem("Help");
+        
+        return help;
+    }
+    
+    private PopupMenu getSelectPredefinedAreaPopupMenu()
+    {
+        PopupMenu subMenu = new PopupMenu("Predefined capture area");
+        
+        MenuItem viewArea = new MenuItem("View selected area");
+        MenuItem deleteArea = new MenuItem("Delete selected area");
+        
+        subMenu.add(viewArea);
+        subMenu.add(deleteArea);
+        
+        return subMenu;
     }
     
     /**
@@ -99,6 +139,7 @@ public class GladivsTrayMenu {
     };
     
     
+    
     /**
      * Acció per al MenuItem 'Open settings window'
      */  
@@ -106,6 +147,14 @@ public class GladivsTrayMenu {
         Platform.runLater(new Runnable() {
             public void run(){
                 Windows.getSettingsDialog().getStage().show();
+            }
+        });
+    };
+    
+    private ActionListener aboutUsDialogListener = (ActionEvent e) -> {
+        Platform.runLater(new Runnable() {
+            public void run(){
+                Windows.getAboutUsDialog().getStage().show();
             }
         });
     };

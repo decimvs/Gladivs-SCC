@@ -36,6 +36,11 @@ public class CaptureRegion extends Monitors {
         captureRegion.captureRegion();
     }
     
+    public static void setRegion()
+    {
+        captureRegion = new CaptureRegion();
+    }
+    
     private void captureRegion()
     {
         Point pt = getMousePosition();
@@ -43,6 +48,11 @@ public class CaptureRegion extends Monitors {
         
         CaptureRegionWindowController crw = new CaptureRegionWindowController(this);
         crw.createNewWindow(gDevice.getConfigurations()[0].getBounds());
+    }
+    
+    private void setCaptureRegion()
+    {
+        
     }
     
     public boolean saveRegion(BufferedImage bf, File selectedFile)

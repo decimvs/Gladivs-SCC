@@ -28,9 +28,9 @@ import org.gespert.gladivs.Instances.SystemTray;
 
 public class MainApp extends Application {
     
-    public final String APP_VERSION = "0.7";
-    public final String APP_NAME = "Gladivs Screen Capture";
-    public final String APP_AUTHOR = "Guillermo Espert Carrasquer";
+    public static final String APP_VERSION = "0.7";
+    public static final String APP_NAME = "Gladivs Screen Capture";
+    public static final String APP_AUTHOR = "Guillermo Espert Carrasquer";
     
     public MainApp()
     {        

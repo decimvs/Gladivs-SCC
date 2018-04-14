@@ -70,6 +70,7 @@ public class CaptureRegionWindowController implements ScreenshotOptionsPopup, Gl
     private Image screenImage;
     private CaptureRegion captureRegion;
     private BufferedImage bf;
+    private boolean setRegion = false;
     
     public CaptureRegionWindowController(CaptureRegion cr)
     {
@@ -88,6 +89,17 @@ public class CaptureRegionWindowController implements ScreenshotOptionsPopup, Gl
         hLine.setStrokeWidth(1.5);
         vLine.setStroke(Color.CORNFLOWERBLUE);
         vLine.setStrokeWidth(1.5);
+    }
+    
+    /**
+     * Estableix un àrea de la pantalla per a ser capturada
+     * @param rec 
+     */
+    public void setCaptureRegion(java.awt.Rectangle rec)
+    {
+        setRegion = true;
+        
+        createNewWindow(rec);
     }
     
     /**
