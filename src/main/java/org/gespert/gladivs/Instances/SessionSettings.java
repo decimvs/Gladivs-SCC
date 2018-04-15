@@ -16,22 +16,24 @@
  */
 package org.gespert.gladivs.Instances;
 
-import org.gespert.gladivs.TrayMenu.TrayMenuCreator;
+import org.gespert.gladivs.Settings.RuntimeSettings;
 
 /**
  *
- * @author gespe
+ * @author Guillermo Espert Carrasquer <gespert at yahoo dot es>
  */
-public class SystemTray {
-    private static TrayMenuCreator stiInstance;
+public class SessionSettings {
     
-    public static TrayMenuCreator getInstance()
+    private static RuntimeSettings runtimeSettings;
+    
+    public static RuntimeSettings getSessionSettings()
     {
-        if(stiInstance == null)
+        if(runtimeSettings == null)
         {
-            stiInstance = new TrayMenuCreator();
+            runtimeSettings = new RuntimeSettings();
         }
         
-        return stiInstance;
-}
+        return runtimeSettings;
+    }
+    
 }

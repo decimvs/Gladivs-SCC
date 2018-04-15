@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.prefs.Preferences;
+import org.jnativehook.keyboard.NativeKeyEvent;
 
 /**
  *
@@ -40,7 +41,7 @@ public class KeyboardSettings extends Settings{
      */
     public List<Integer> getTakeScrenShotKeys()
     {
-        return getKeysValue(KeyboardSettings.TAKE_SCREENSHOT, KeyboardSettings.TAKE_SCREENSHOT_DEF);
+        return getKeysValue(TAKE_SCREENSHOT, TAKE_SCREENSHOT_DEF);
     }
     
     /**
@@ -49,7 +50,36 @@ public class KeyboardSettings extends Settings{
      */
     public List<Integer> getCaptureRegionKeys()
     {
-        return getKeysValue(KeyboardSettings.CAPTURE_REGION, KeyboardSettings.CAPTURE_REGION_DEF);
+        return getKeysValue(CAPTURE_REGION, CAPTURE_REGION_DEF);
+    }
+    
+    /**
+     * Retorna la combinacio de tecles per a la captura de l'última regió de la pantalla
+     * capturada.
+     * @return 
+     */
+    public List<Integer> getCaptureLastRegionKeys()
+    {
+        return getKeysValue(CAPTURE_LAST_REGION, CAPTURE_LAST_REGION_DEF);
+    }
+    
+    /**
+     * Retorna la combinacio de tecles per a seleccionar una regió de la pantalla
+     * @return 
+     */
+    public List<Integer> getSelectRegionKeys()
+    {
+        return getKeysValue(SELECT_REGION, SELECT_REGION_DEF);
+    }
+    
+    /**
+     * Retorna la combinacio de tecles per a capturar una regió de la pantalla
+     * preseleccionada.
+     * @return 
+     */
+    public List<Integer> getCaptureSelectedRegionKeys()
+    {
+        return getKeysValue(CAPTURE_SELECTED_REGION, CAPTURE_SELECTED_REGION_DEF);
     }
     
     /*********************************
@@ -74,6 +104,86 @@ public class KeyboardSettings extends Settings{
         setKeysValue(KeyboardSettings.CAPTURE_REGION, keys, KeyboardSettings.CAPTURE_REGION_DEF);
     }
     
+    /**
+     * Estableix la combinacio de tecles par a la captura d'una regió de la pantalla
+     * capturada anteriorment
+     * @param keys 
+     */
+    public void setCaptureLastRegionKeys(List<Integer> keys)
+    {
+        setKeysValue(KeyboardSettings.CAPTURE_LAST_REGION, keys, KeyboardSettings.CAPTURE_LAST_REGION_DEF);
+    }
+    
+    /**
+     * Estableix la combinacio de tecles par a la selecció d'una regió de la pantalla
+     * @param keys 
+     */
+    public void setSelectRegionKeys(List<Integer> keys)
+    {
+        setKeysValue(SELECT_REGION, keys, SELECT_REGION_DEF);
+    }
+    
+    /**
+     * Estableix la combinacio de tecles per a la captura d'una regió de la pantalla
+     * preseleccionada
+     * @param keys 
+     */
+    public void setCaptureSelectedRegionKeys(List<Integer> keys)
+    {
+        setKeysValue(CAPTURE_SELECTED_REGION, keys, CAPTURE_SELECTED_REGION_DEF);
+    }
+    
+    /*********************************
+     *          EMPTY
+     ********************************/
+    
+    /**
+     * Estableix la combinacio de tecles per a la captura de pantalla
+     * @param keys 
+     */
+    public void emptyTakeScreenshotKeys()
+    {
+        emptySettingValue(KeyboardSettings.TAKE_SCREENSHOT);
+    }
+  
+    /**
+     * Estableix la combinacio de tecles par a la captura d'una regió de la pantalla
+     * @param keys 
+     */
+    public void emptyCaptureRegionKeys()
+    {
+        emptySettingValue(KeyboardSettings.CAPTURE_REGION);
+    }
+    
+    /**
+     * Estableix la combinacio de tecles par a la captura d'una regió de la pantalla
+     * capturada anteriorment
+     * @param keys 
+     */
+    public void emptyCaptureLastRegionKeys()
+    {
+        emptySettingValue(KeyboardSettings.CAPTURE_LAST_REGION);
+    }
+    
+    /**
+     * Estableix la combinacio de tecles par a la selecció d'una regió de la pantalla
+     * @param keys 
+     */
+    public void emptySelectRegionKeys()
+    {
+        emptySettingValue(SELECT_REGION);
+    }
+    
+    /**
+     * Estableix la combinacio de tecles per a la captura d'una regió de la pantalla
+     * preseleccionada
+     * @param keys 
+     */
+    public void emptyCaptureSelectedRegionKeys()
+    {
+        emptySettingValue(CAPTURE_SELECTED_REGION);
+    }
+    
     /*********************************
      *        SETTING NAMES
      ********************************/
@@ -84,16 +194,33 @@ public class KeyboardSettings extends Settings{
     //Nom per al setting de les tecles de captura de regió de la pantalla.
     protected static final String CAPTURE_REGION = "keyboard.keys.capture-region";
     
+    //Nom per al setting de les tecles de captura de la ùltima regió capturada de la pantalla.
+    protected static final String CAPTURE_LAST_REGION = "keyboard.keys.capture-last-region";
+    
+    //Nom per al setting de les tecles de selecció de regió de la pantalla
+    protected static final String SELECT_REGION = "keyboard.keys.select-region";
+    
+    //Nom per al setting de les tecles de captura de regió preseleccionada de la pantalla
+    protected static final String CAPTURE_SELECTED_REGION = "keyboard.keys.capture-selected-region";
+    
     /*********************************************************
      *          Valors per defecte de les preferències
      *********************************************************/
     
     //Tecla per defecte per a la captura de pantalla: Impr Pant -> 3639
-    protected static final List<Integer> TAKE_SCREENSHOT_DEF = Arrays.asList(3639);
+    protected static final List<Integer> TAKE_SCREENSHOT_DEF = Arrays.asList(NativeKeyEvent.VC_PRINTSCREEN);
     
-    //Combinacio de tecles per a la actualitzacio dels monitors: CTRL + Impr Pant -> 29 + 3639
-    protected static final List<Integer> CAPTURE_REGION_DEF = Arrays.asList(29, 3639);
+    //Combinacio de tecles per a la captura d'una regió de la pantalla: CTRL + Impr Pant -> 29 + 3639
+    protected static final List<Integer> CAPTURE_REGION_DEF = Arrays.asList(NativeKeyEvent.VC_CONTROL_L, NativeKeyEvent.VC_PRINTSCREEN);
     
+    //Combinacio de tecles per a la captura d'una regió capturada anteriorment: CTRL + Shift + Impr Pant -> 29 + 42 + 3639
+    protected static final List<Integer> CAPTURE_LAST_REGION_DEF = Arrays.asList(NativeKeyEvent.VC_CONTROL_L, NativeKeyEvent.VC_SHIFT_L, NativeKeyEvent.VC_PRINTSCREEN);
+    
+    //Combinacio de tecles per a la definició d'una regió de la pantalla: ALT + Impr Pant -> 56 + 3639
+    protected static final List<Integer> SELECT_REGION_DEF = Arrays.asList(NativeKeyEvent.VC_ALT_L, NativeKeyEvent.VC_PRINTSCREEN);
+    
+    //Combinacio de tecles per a la captura d'una regió preseleccionada: ALT + Shift + Impr Pant -> 56 + 42 + 3639
+    protected static final List<Integer> CAPTURE_SELECTED_REGION_DEF = Arrays.asList(NativeKeyEvent.VC_ALT_L, NativeKeyEvent.VC_SHIFT_L, NativeKeyEvent.VC_PRINTSCREEN);
     
     /*********************************
      *        OTHER METHODS

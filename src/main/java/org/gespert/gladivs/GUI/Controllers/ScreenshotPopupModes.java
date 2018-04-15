@@ -14,24 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gespert.gladivs.Instances;
-
-import org.gespert.gladivs.TrayMenu.TrayMenuCreator;
+package org.gespert.gladivs.GUI.Controllers;
 
 /**
  *
- * @author gespe
+ * @author Guillermo Espert Carrasquer <gespert at yahoo dot es>
  */
-public class SystemTray {
-    private static TrayMenuCreator stiInstance;
-    
-    public static TrayMenuCreator getInstance()
-    {
-        if(stiInstance == null)
-        {
-            stiInstance = new TrayMenuCreator();
-        }
-        
-        return stiInstance;
-}
+public enum ScreenshotPopupModes {
+    REGION_CAPTURE,
+    SCREEN_CAPTURE
 }

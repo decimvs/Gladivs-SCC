@@ -17,7 +17,6 @@
 package org.gespert.gladivs.GUI.Controllers;
 
 import java.awt.AWTException;
-import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.Robot;
 import java.awt.image.BufferedImage;
@@ -43,9 +42,11 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import org.gespert.gladivs.GUI.GlobalKeyConsumer;
 import org.gespert.gladivs.GUI.ScreenshotOptionsPopup;
-import org.gespert.gladivs.GUI.Stages.ScreenshotOptionsPopupCreator;
+import org.gespert.gladivs.GUI.OptionsPopup.ScreenshotOptionsPopupCreator;
 import org.gespert.gladivs.Instances.KeysListener;
+import org.gespert.gladivs.Instances.SettingsInstance;
 import org.gespert.gladivs.Screenshots.CaptureRegion;
+import org.gespert.gladivs.Screenshots.MonitorData;
 import org.gespert.gladivs.Screenshots.ScreenImage;
 import org.jnativehook.keyboard.NativeKeyEvent;
 
@@ -71,13 +72,37 @@ public class CaptureRegionWindowController implements ScreenshotOptionsPopup, Gl
     private CaptureRegion captureRegion;
     private BufferedImage bf;
     private boolean setRegion = false;
+    private boolean showArea = false;
+    private MonitorData monitorData;
     
+    /**
+     * Crea una nova instància del creador de la finestra, amb una referència
+     * a l'objecte de gestió de les Captures de regió. Crea un recuadre de 
+     * selecció de tamany 0. Este constructor s'usa quan es vol definir
+     * una nova àrea de selecció.
+     * 
+     * @param cr 
+     */
     public CaptureRegionWindowController(CaptureRegion cr)
+    {
+        this(cr, new Rectangle(0,0,0,0));
+    }
+    
+    /**
+     * Crea una nova instància del creador de la finestra, amb una referència a
+     * l'objecte de gestió de les Captures de regió. En a finestra s'utilitza el
+     * recuadre passat per a dibuixar l'àrea de selecció. Este constructor s'usa
+     * quant es vol mostrar una àrea de selecció prèvia.
+     * 
+     * @param cr
+     * @param rec 
+     */
+    public CaptureRegionWindowController(CaptureRegion cr, Rectangle rec)
     {
         captureRegion = cr;
         
         //Inicialitzar el recuadre de sel·lecció
-        selectionArea = new Rectangle(0, 0, 0, 0);
+        selectionArea = rec;
         selectionArea.setFill(Color.rgb(0, 10, 100, 0.3));
         selectionArea.setStroke(Color.BLUEVIOLET);
         selectionArea.setStrokeWidth(2.0);
@@ -92,14 +117,32 @@ public class CaptureRegionWindowController implements ScreenshotOptionsPopup, Gl
     }
     
     /**
-     * Estableix un àrea de la pantalla per a ser capturada
+     * Estableix una àrea de la pantalla per a ser capturada
      * @param rec 
      */
-    public void setCaptureRegion(java.awt.Rectangle rec)
+    public void setCaptureRegion(MonitorData md)
     {
         setRegion = true;
         
-        createNewWindow(rec);
+        createNewWindow(md);
+    }
+    
+    /**
+     * Captura una regió de la pantalla
+     * @param rec 
+     */
+    public void captureRegion(MonitorData md)
+    {
+        setRegion = false;
+        
+        createNewWindow(md);
+    }
+    
+    public void showSelectedArea(MonitorData md)
+    {
+        showArea = true;
+        
+        createNewWindow(md);
     }
     
     /**
@@ -109,9 +152,11 @@ public class CaptureRegionWindowController implements ScreenshotOptionsPopup, Gl
      * de la captura de pantalla.
      * @param rec 
      */
-    public void createNewWindow(java.awt.Rectangle rec)
+    private void createNewWindow(MonitorData md)
     {
         try {
+            monitorData = md;
+            
             //Preparar les variables
             stage = new Stage();
             parentPane = new AnchorPane();
@@ -121,22 +166,22 @@ public class CaptureRegionWindowController implements ScreenshotOptionsPopup, Gl
             //Configurar la finestra
             stage.setScene(scene);
             stage.initStyle(StageStyle.TRANSPARENT);
-            stage.setX(new Double(rec.x));
-            stage.setY(new Double(rec.y));
-            stage.setWidth(new Double(rec.width));
-            stage.setHeight(new Double(rec.height));
+            stage.setX(new Double(md.getMonitorRectangle().x));
+            stage.setY(new Double(md.getMonitorRectangle().y));
+            stage.setWidth(new Double(md.getMonitorRectangle().width));
+            stage.setHeight(new Double(md.getMonitorRectangle().height));
             stage.setAlwaysOnTop(true);
             scene.setCursor(Cursor.CROSSHAIR);
             stage.getIcons().add(new Image(getClass().getResourceAsStream("/icons/icona_sense_sombra.png")));
             
             //Configurar les linies de seguiment
             hLine.setStartX(0);
-            hLine.setEndX(rec.width);
+            hLine.setEndX(md.getMonitorRectangle().width);
             vLine.setStartY(0);
-            vLine.setEndY(rec.height);
+            vLine.setEndY(md.getMonitorRectangle().height);
             
             //Afegir contenedor de imatges, obternir la captura i mostrarla
-            bf = new Robot().createScreenCapture(rec);
+            bf = new Robot().createScreenCapture(md.getMonitorRectangle());
             screenImage = SwingFXUtils.toFXImage(bf, null);
             ImageView imageView = new ImageView(screenImage);
             AnchorPane.setTopAnchor(imageView, 0d);
@@ -161,11 +206,17 @@ public class CaptureRegionWindowController implements ScreenshotOptionsPopup, Gl
             stage.show();
             
             //Posicionar les línies en funció del punter del ratolí
-            Point point = MouseInfo.getPointerInfo().getLocation();
+            Point point = md.getMousePointer();
             hLine.setStartY(point.getY());
             hLine.setEndY(point.getY());
             vLine.setStartX(point.getX());
             vLine.setEndX(point.getX());
+            
+            if(showArea)
+            {
+                parentPane.getChildren().add(selectionArea);
+                showScreenshotOptionsPopup();
+            }
             
             //Assignar el focus al panell de base
             parentPane.requestFocus();
@@ -190,8 +241,20 @@ public class CaptureRegionWindowController implements ScreenshotOptionsPopup, Gl
         isPopupOptionsShowing = false;
         isDrawingSelArea = false;
         isSelAreaDrawed = false;
+        showArea = false;
         
         parentPane.getChildren().addAll(hLine, vLine);
+    }
+    
+    /**
+     * Estableix la regió seleccionada com a regió preseleccionada. Esta regió
+     * quedarà enmagazemada en els paràmetres i podrà ser recuperada en qualsevol
+     * moment.
+     */
+    public void setSelectedRegion()
+    {
+        SettingsInstance.getGeneralSettings().setSelectedRegion(monitorData); 
+        SettingsInstance.getGeneralSettings().saveSettings();
     }
     
     /**
@@ -200,8 +263,9 @@ public class CaptureRegionWindowController implements ScreenshotOptionsPopup, Gl
      */
     private void showScreenshotOptionsPopup()
     {
-        sopPopup = new ScreenshotOptionsPopupCreator(this);
-        sopPopup.createNewPopup();
+        sopPopup = new ScreenshotOptionsPopupCreator(this, ScreenshotPopupModes.REGION_CAPTURE);
+        
+        sopPopup.createNewPopup(monitorData);
         
         isPopupOptionsShowing = true;
     }
@@ -242,7 +306,7 @@ public class CaptureRegionWindowController implements ScreenshotOptionsPopup, Gl
     public EventHandler<MouseEvent> onMousePressed = new EventHandler<MouseEvent>() {
         @Override
         public void handle(MouseEvent event) {
-            if(event.getButton() == MouseButton.PRIMARY && !isSelAreaDrawed)
+            if(event.getButton() == MouseButton.PRIMARY && !isSelAreaDrawed && !showArea)
             {
                 originX = event.getX();
                 originY = event.getY();
@@ -262,7 +326,7 @@ public class CaptureRegionWindowController implements ScreenshotOptionsPopup, Gl
     public EventHandler<MouseEvent> onMouseDragged = new EventHandler<MouseEvent>() {
         @Override
         public void handle(MouseEvent event) {
-            if(!isSelAreaDrawed)
+            if(!isSelAreaDrawed && !showArea)
             {
                 selectionArea.setWidth(event.getX() - originX);
                 selectionArea.setHeight(event.getY() - originY);
@@ -277,10 +341,12 @@ public class CaptureRegionWindowController implements ScreenshotOptionsPopup, Gl
     public EventHandler<MouseEvent> onMouseReleased = new EventHandler<MouseEvent>() {
         @Override
         public void handle(MouseEvent event) {
-            if(isDrawingSelArea && !isPopupOptionsShowing)
+            if(isDrawingSelArea && !isPopupOptionsShowing && !showArea)
             {
                 isSelAreaDrawed = true;
                 parentPane.getChildren().removeAll(hLine, vLine);
+                
+                monitorData.setAreaRectangle(selectionArea);
                 
                 showScreenshotOptionsPopup();
             }

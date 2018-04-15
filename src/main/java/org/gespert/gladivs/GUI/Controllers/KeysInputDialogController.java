@@ -46,6 +46,9 @@ public class KeysInputDialogController implements Initializable, NativeKeyListen
     
     public static final int TAKE_SCREENSHOT = 0;
     public static final int CAPTURE_REGION  = 1;
+    public static final int SELECT_REGION = 2;
+    public static final int CAPTURE_LAST_REGION = 3;
+    public static final int CAPTURE_SELECTED_REGION = 4;
     
     @FXML
     private Label lblTecles;
@@ -108,6 +111,15 @@ public class KeysInputDialogController implements Initializable, NativeKeyListen
                     break;
                 case CAPTURE_REGION:
                     SettingsInstance.getKeyboardSettings().setCaptureRegionKeys(keysPressed);
+                    break;
+                case CAPTURE_LAST_REGION:
+                    SettingsInstance.getKeyboardSettings().setCaptureLastRegionKeys(keysPressed);
+                    break;
+                case SELECT_REGION:
+                    SettingsInstance.getKeyboardSettings().setSelectRegionKeys(keysPressed);
+                    break;
+                case CAPTURE_SELECTED_REGION:
+                    SettingsInstance.getKeyboardSettings().setCaptureSelectedRegionKeys(keysPressed);
                     break;
             }
             

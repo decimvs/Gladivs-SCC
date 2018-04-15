@@ -54,7 +54,8 @@ public class SettingsWindowCreator {
             sdStage.setScene(new Scene(root));
             
         } catch (IOException ex) {
-            System.out.println("Error durant la creació de la finestra de les preferències: " + ex.getMessage());
+            //System.out.println("Error durant la creació de la finestra de les preferències: " + ex.getMessage());
+            ex.printStackTrace();
         }
     }
     

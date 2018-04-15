@@ -14,10 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package org.gespert.gladivs.GUI.Stages;
+package org.gespert.gladivs.GUI.OptionsPopup;
 
-import java.awt.GraphicsConfiguration;
-import java.awt.GraphicsDevice;
+import org.gespert.gladivs.GUI.OptionsPopup.Controllers.ScreenshotOptionsPopupController;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.io.IOException;
@@ -31,11 +30,13 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import org.gespert.gladivs.GUI.Controllers.ScreenshotOptionsPopupController;
+import org.gespert.gladivs.GUI.Controllers.ScreenshotPopupModes;
+import org.gespert.gladivs.GUI.OptionsPopup.Controllers.OptionButtonsBase;
 import org.gespert.gladivs.GUI.ScreenshotOptionsPopup;
-import org.gespert.gladivs.Screenshots.Monitors;
+import org.gespert.gladivs.Screenshots.MonitorData;
 
 /**
  *
@@ -46,19 +47,23 @@ public class ScreenshotOptionsPopupCreator {
     private Stage stage;
     private Scene scene;
     private FXMLLoader loader;
-    private GraphicsDevice gDevice;
-    private Monitors monitors;
     private Stage parentStage;
-    private ScreenshotOptionsPopupController sopControler;
+    private ScreenshotOptionsPopupController sopController;
+    private OptionButtonsBase buttonsController;
     private ScreenshotOptionsPopup crController;
+    private ScreenshotPopupModes popupMode;
     
-    public ScreenshotOptionsPopupCreator(ScreenshotOptionsPopup cr)
+    public ScreenshotOptionsPopupCreator(ScreenshotOptionsPopup cr, ScreenshotPopupModes pm)
     {
         crController = cr;
         parentStage = cr.getStage();
+        popupMode = pm;
     }
     
-    public void createNewPopup()
+    /**
+     * Crea una nova finestra segons el context
+     */
+    public void createNewPopup(MonitorData md)
     {
         try {
             //Preparar el carregador de FXML
@@ -74,22 +79,49 @@ public class ScreenshotOptionsPopupCreator {
             stage.setAlwaysOnTop(true);
             stage.setResizable(false);
             stage.initStyle(StageStyle.TRANSPARENT);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initOwner(crController.getStage());
             scene.setFill(Color.TRANSPARENT);
             scene.getStylesheets().add("/styles/screenshotOptionsPopup.css");
             stage.getIcons().add(new Image(getClass().getResourceAsStream("/icons/icona_sense_sombra.png")));
             
+            //Loader per als botons d'opcions
+            FXMLLoader btnLoader = getLoadedFXMLForPopupMode();
+         
+            //Carregar i inicialitzar la finestra del popup d'opcions
+            sopController = (ScreenshotOptionsPopupController) loader.getController();
+            sopController.setPopupWindowCreator(this);
+            sopController.setPopupMode(popupMode);
+            sopController.setCaptureRegionController(crController);
+            sopController.loadPopupButtons(btnLoader);
+            sopController.postInitialize();
+            
+            //Obtenir el controlador dels botons d'opcions i carregar valors
+            buttonsController = (OptionButtonsBase) btnLoader.getController();
+            buttonsController.setPopupWindowCreator(this);
+            buttonsController.setPopupMode(popupMode);
+            buttonsController.setCaptureRegionController(crController);
+            
+            //Mostra la finestra
             stage.show();
-            sopControler = (ScreenshotOptionsPopupController) loader.getController();
-            sopControler.setPopupWindowCreator(this);
-            sopControler.setCaptureRegionController(crController);
-            sopControler.postInitialize();
             
             //Obtenir les dades del monitor actual
-            monitors = new Monitors();
-            Point pt = monitors.getMousePosition();
-            gDevice = monitors.getMonitorFromProsition(pt);
-            GraphicsConfiguration gConfig = gDevice.getConfigurations()[0];
-            Rectangle rec = gConfig.getBounds();
+            Rectangle rec = md.getMonitorRectangle();
+            Point pt;
+            
+            /**
+             * Si el rectangle d'area està definit, provem de calcular la posició 
+             * del punt final, en el punt de finalització de dibuixat.
+             */
+            if(md.getAreaRectangle() != null)
+            {
+                pt = new Point();
+                pt.setLocation(rec.getX() + md.getAreaRectangle().getX() + md.getAreaRectangle().getWidth(), rec.getY() + md.getAreaRectangle().getX() + md.getAreaRectangle().getHeight());
+            }
+            else
+            {
+                pt = md.getMousePointer();
+            }
             
             Double scWidth = stage.getWidth();
             Double scHeight = stage.getHeight();
@@ -123,11 +155,35 @@ public class ScreenshotOptionsPopupCreator {
         }
     }
     
+    private FXMLLoader getLoadedFXMLForPopupMode()throws IOException
+    {
+        switch(popupMode)
+        {
+            case REGION_CAPTURE:
+                return new FXMLLoader(
+                    getClass().getResource("/fxml/sopRegionCaptureButtons.fxml")
+                );
+            case SCREEN_CAPTURE:
+                return new FXMLLoader(
+                    getClass().getResource("/fxml/sopMonitorCaptureButtons.fxml")
+                );
+            default:
+                return null;
+        }
+    }
+    
+    /**
+     * Tanca la finestra popup
+     */
     public void closePopupWindow()
     {
         if(stage != null) stage.close();
     }
     
+    /**
+     * Retorna el stage
+     * @return 
+     */
     public Stage getStage()
     {
         return stage;

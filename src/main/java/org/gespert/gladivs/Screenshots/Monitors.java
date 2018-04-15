@@ -22,7 +22,7 @@ import java.awt.GraphicsEnvironment;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.Rectangle;
-import javafx.scene.image.Image;
+import java.util.ArrayList;
 
 /**
  *
@@ -50,20 +50,13 @@ public class Monitors {
         GraphicsEnvironment gEnv = GraphicsEnvironment.getLocalGraphicsEnvironment();
         GraphicsDevice[] gDevice = gEnv.getScreenDevices();
         
-        System.out.format("Mouse X: %d Y: %d", pt.x, pt.y);
-        System.out.println();
-        
         for(int i = 0; i < gDevice.length; i++)
         {
             GraphicsConfiguration gc = gDevice[i].getDefaultConfiguration();
             Rectangle rec = gc.getBounds();
             
-            System.out.format("Rectangle X: %d Y: %d Width: %d Height: %d", rec.x, rec.y, rec.width, rec.height);
-            System.out.println();
-            
             if(rec.x <= pt.x && rec.y <= pt.y && (rec.width + rec.x) >= pt.x && (rec.height + rec.y) >= pt.y)
             {
-                System.out.println("Monitor: " + i);
                 return gc.getDevice();
             }
         }
@@ -82,8 +75,23 @@ public class Monitors {
         return getMonitorFromProsition(getMousePosition());
     }
     
-    protected void saveScreenShot(Image im, String path)
+    public ArrayList<MonitorData> getMonitors()
     {
+        ArrayList<MonitorData> monitors = new ArrayList<>();
         
+        GraphicsEnvironment gEnv = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        GraphicsDevice[] gDevice = gEnv.getScreenDevices();
+        
+        for(int i = 0; i < gDevice.length; i++)
+        {
+            GraphicsConfiguration gc = gDevice[i].getDefaultConfiguration();
+            Rectangle rec = gc.getBounds();
+            Point pt = new Point(rec.x + (rec.width / 2), rec.y + (rec.height / 2));
+            MonitorData md = new MonitorData(rec, pt);
+            
+            monitors.add(md);
+        }
+        
+        return monitors;
     }
 }

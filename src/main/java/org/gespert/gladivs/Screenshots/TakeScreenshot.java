@@ -25,8 +25,9 @@ import java.io.File;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.stage.Stage;
+import org.gespert.gladivs.GUI.Controllers.ScreenshotPopupModes;
 import org.gespert.gladivs.GUI.ScreenshotOptionsPopup;
-import org.gespert.gladivs.GUI.Stages.ScreenshotOptionsPopupCreator;
+import org.gespert.gladivs.GUI.OptionsPopup.ScreenshotOptionsPopupCreator;
 
 /**
  *
@@ -44,15 +45,28 @@ public class TakeScreenshot extends Monitors implements ScreenshotOptionsPopup {
         takeScreenshot.takeScreenshot();
     }
     
+    public static void Do(MonitorData md)
+    {
+        takeScreenshot = new TakeScreenshot();
+        takeScreenshot.takeScreenshot(md);
+    }
+    
     private void takeScreenshot()
     {
+        Point pt = getMousePosition();
+        GraphicsDevice gDevice = getMonitorFromProsition(pt);
+        MonitorData md = new MonitorData(gDevice.getConfigurations()[0].getBounds(), pt);
+        
+        takeScreenshot(md);
+    }
+    
+    private void takeScreenshot(MonitorData md)
+    {
         try {
-            Point pt = getMousePosition();
-            GraphicsDevice gDevice = getMonitorFromProsition(pt);
-            screenShot = new Robot().createScreenCapture(gDevice.getConfigurations()[0].getBounds());
+            screenShot = new Robot().createScreenCapture(md.getMonitorRectangle());
             
-            sopPopup = new ScreenshotOptionsPopupCreator(this);
-            sopPopup.createNewPopup();
+            sopPopup = new ScreenshotOptionsPopupCreator(this, ScreenshotPopupModes.SCREEN_CAPTURE);
+            sopPopup.createNewPopup(md);
             
         } catch (AWTException ex) {
             Logger.getLogger(TakeScreenshot.class.getName()).log(Level.SEVERE, null, ex);
@@ -73,6 +87,11 @@ public class TakeScreenshot extends Monitors implements ScreenshotOptionsPopup {
     @Override
     public Stage getStage() {
         return null;
+    }
+
+    @Override
+    public void setSelectedRegion() {
+        //Nothing to do
     }
     
 }

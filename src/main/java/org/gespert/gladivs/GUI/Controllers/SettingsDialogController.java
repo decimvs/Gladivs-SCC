@@ -44,10 +44,10 @@ import org.jnativehook.keyboard.NativeKeyEvent;
 public class SettingsDialogController implements Initializable {
     
     @FXML
-    private Label lblImprPantalla, lblRecarregarMiniatures;
+    private Label lblCaptureMonitor, lblRegionCapture,lblLastRegionCapture, lblSelectRegionKeys, lblCaptureSelectedRegion;
     
     @FXML
-    private Button btnModificarImprPant, btnModificarRecarregarMiniatures;
+    private Button btnSetMonitorCaptureKeys, btnSetRegionCaptureKeys, btnSetLastRegionCaptureKeys, btnSetSelectRegionKeys, btnSetCaptureSelectedRegionKeys;
     
     @FXML
     private Button btnCancel, btnApply, btnAccept, btnSelectDefaultDirectory;
@@ -63,8 +63,12 @@ public class SettingsDialogController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         updatableChanges = new ArrayList<>();
         
-        btnModificarImprPant.addEventHandler(ActionEvent.ACTION, onBtnModificarImprPantAction);
-        btnModificarRecarregarMiniatures.addEventHandler(ActionEvent.ACTION, onBtnModificarRecarregarMiniaturesAction);
+        btnSetMonitorCaptureKeys.addEventHandler(ActionEvent.ACTION, onBtnSetCaptureMonitorKeysAction);
+        btnSetRegionCaptureKeys.addEventHandler(ActionEvent.ACTION, onBtnSetCaptureRegionKeysAction);
+        btnSetLastRegionCaptureKeys.addEventHandler(ActionEvent.ACTION, onBtnSetCaptureLastRegionKeysAction);
+        btnSetSelectRegionKeys.addEventHandler(ActionEvent.ACTION, onBtnSetSelectRegionKeysAction);
+        btnSetCaptureSelectedRegionKeys.addEventHandler(ActionEvent.ACTION, onBtnSetCaptureSelectedRegionKeysAction);
+        
         btnApply.addEventHandler(ActionEvent.ACTION, onBtnApplyAction);
         btnCancel.addEventHandler(ActionEvent.ACTION, onBtnCancelAction);
         btnAccept.addEventHandler(ActionEvent.ACTION, onBtnAcceptAction);
@@ -79,8 +83,11 @@ public class SettingsDialogController implements Initializable {
     private void loadCurrentSettingsValues()
     {
         //Establir les tecles actuals
-        setCombinationKeys(kbSettings.getTakeScrenShotKeys(), lblImprPantalla);
-        setCombinationKeys(kbSettings.getCaptureRegionKeys(), lblRecarregarMiniatures);
+        setCombinationKeys(kbSettings.getTakeScrenShotKeys(), lblCaptureMonitor);
+        setCombinationKeys(kbSettings.getCaptureRegionKeys(), lblRegionCapture);
+        setCombinationKeys(kbSettings.getCaptureLastRegionKeys(), lblLastRegionCapture);
+        setCombinationKeys(kbSettings.getSelectRegionKeys(), lblSelectRegionKeys);
+        setCombinationKeys(kbSettings.getCaptureSelectedRegionKeys(), lblCaptureSelectedRegion);
         
         String directoryValue = SettingsInstance.getGeneralSettings().getUserSelectedImagesSavePath();
         txtDefaultDirectory.setText(directoryValue);
@@ -273,17 +280,37 @@ public class SettingsDialogController implements Initializable {
         saveSettings();
     };
     
-    private EventHandler<ActionEvent> onBtnModificarImprPantAction = (evt) -> {
+    private EventHandler<ActionEvent> onBtnSetCaptureMonitorKeysAction = (evt) -> {
 
-        Windows.getKeyInputDialog().getController().setParentKeysLabel(lblImprPantalla);
+        Windows.getKeyInputDialog().getController().setParentKeysLabel(lblCaptureMonitor);
         Windows.getKeyInputDialog().getController().setKeyboardSetting(KeysInputDialogController.TAKE_SCREENSHOT);
         Windows.getKeyInputDialog().getStage().show();
     };
 
-    private EventHandler<ActionEvent> onBtnModificarRecarregarMiniaturesAction = (evt) -> {
 
-        Windows.getKeyInputDialog().getController().setParentKeysLabel(lblRecarregarMiniatures);
+    private EventHandler<ActionEvent> onBtnSetCaptureRegionKeysAction = (evt) -> {
+
+        Windows.getKeyInputDialog().getController().setParentKeysLabel(lblRegionCapture);
         Windows.getKeyInputDialog().getController().setKeyboardSetting(KeysInputDialogController.CAPTURE_REGION);
+        Windows.getKeyInputDialog().getStage().show();
+    };
+    
+    private EventHandler<ActionEvent> onBtnSetCaptureLastRegionKeysAction = (evt) -> {
+
+        Windows.getKeyInputDialog().getController().setParentKeysLabel(lblLastRegionCapture);
+        Windows.getKeyInputDialog().getController().setKeyboardSetting(KeysInputDialogController.CAPTURE_LAST_REGION);
+        Windows.getKeyInputDialog().getStage().show();
+    };
+    
+    private EventHandler<ActionEvent> onBtnSetSelectRegionKeysAction = (evt) -> {
+        Windows.getKeyInputDialog().getController().setParentKeysLabel(lblSelectRegionKeys);
+        Windows.getKeyInputDialog().getController().setKeyboardSetting(KeysInputDialogController.SELECT_REGION);
+        Windows.getKeyInputDialog().getStage().show();
+    };
+    
+    private EventHandler<ActionEvent> onBtnSetCaptureSelectedRegionKeysAction = (evt) -> {
+        Windows.getKeyInputDialog().getController().setParentKeysLabel(lblCaptureSelectedRegion);
+        Windows.getKeyInputDialog().getController().setKeyboardSetting(KeysInputDialogController.CAPTURE_SELECTED_REGION);
         Windows.getKeyInputDialog().getStage().show();
     };
 }

@@ -22,7 +22,6 @@ import javafx.stage.Stage;
 import static javafx.application.Application.launch;
 import javafx.application.Platform;
 import org.gespert.gladivs.Instances.KeysListener;
-import org.gespert.gladivs.TrayMenu.GladivsTrayMenu;
 import org.gespert.gladivs.Instances.SystemTray;
 
 
@@ -43,8 +42,15 @@ public class MainApp extends Application {
     public void start(Stage stage) throws Exception 
     {  
         Platform.setImplicitExit(false);
-        GladivsTrayMenu trayMenu = SystemTray.getInstance();
-        trayMenu.displayIconInTray();
+        
+        if(java.awt.SystemTray.isSupported())
+        {
+            SystemTray.getInstance().displayIconInTray();
+        }
+        else
+        {
+            System.out.println("System tray icon is not supported in this system.");
+        }
     }
 
     /**

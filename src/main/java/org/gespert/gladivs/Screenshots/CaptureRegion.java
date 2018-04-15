@@ -21,6 +21,7 @@ import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import org.gespert.gladivs.GUI.Controllers.CaptureRegionWindowController;
+import org.gespert.gladivs.Instances.SettingsInstance;
 
 /**
  *
@@ -39,20 +40,71 @@ public class CaptureRegion extends Monitors {
     public static void setRegion()
     {
         captureRegion = new CaptureRegion();
+        captureRegion.setCaptureRegion();
+    }
+    
+    public static void showSelectedRegion()
+    {
+        captureRegion = new CaptureRegion();
+        captureRegion.showRegion();
+    }
+    
+    public static void Do(MonitorData md)
+    {
+        captureRegion = new CaptureRegion();
+        captureRegion.captureRegion(md);
+    }
+    
+    public static void setRegion(MonitorData md)
+    {
+        captureRegion = new CaptureRegion();
+        captureRegion.setCaptureRegion(md);
+    }
+    
+    public static void showSelectedRegion(MonitorData md)
+    {
+        captureRegion = new CaptureRegion();
+        captureRegion.showRegion(md);
     }
     
     private void captureRegion()
     {
         Point pt = getMousePosition();
         GraphicsDevice gDevice = getMonitorFromProsition(pt);
-        
-        CaptureRegionWindowController crw = new CaptureRegionWindowController(this);
-        crw.createNewWindow(gDevice.getConfigurations()[0].getBounds());
+        MonitorData md = new MonitorData(gDevice.getConfigurations()[0].getBounds(), pt);
+        captureRegion(md);
     }
     
     private void setCaptureRegion()
     {
-        
+        Point pt = getMousePosition();
+        GraphicsDevice gDevice = getMonitorFromProsition(pt);
+        MonitorData md = new MonitorData(gDevice.getConfigurations()[0].getBounds(), pt);
+        setCaptureRegion(md);
+    }
+    
+    private void showRegion()
+    {
+        MonitorData md = SettingsInstance.getGeneralSettings().getSelectedRegion();
+        showRegion(md);
+    }
+    
+    private void captureRegion(MonitorData md)
+    {
+        CaptureRegionWindowController crw = new CaptureRegionWindowController(this);
+        crw.captureRegion(md);
+    }
+    
+    private void setCaptureRegion(MonitorData md)
+    {
+        CaptureRegionWindowController crw = new CaptureRegionWindowController(this);
+        crw.setCaptureRegion(md);
+    }
+    
+    private void showRegion(MonitorData md)
+    {
+        CaptureRegionWindowController crw = new CaptureRegionWindowController(this, md.getAreaRectangle());
+        crw.showSelectedArea(md);
     }
     
     public boolean saveRegion(BufferedImage bf, File selectedFile)

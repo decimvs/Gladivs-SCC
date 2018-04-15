@@ -34,4 +34,6 @@ public interface ScreenshotOptionsPopup {
     
     public Stage getStage();
     
+    public void setSelectedRegion();
+    
 }

@@ -94,6 +94,7 @@ public class GlobalKeyListener implements NativeKeyListener {
     {
         ArrayList<Integer> takeScreenshot = (ArrayList<Integer>) SettingsInstance.getKeyboardSettings().getTakeScrenShotKeys();
         ArrayList<Integer> captureRegion = (ArrayList<Integer>) SettingsInstance.getKeyboardSettings().getCaptureRegionKeys();
+        ArrayList<Integer> selectRegion = (ArrayList<Integer>) SettingsInstance.getKeyboardSettings().getSelectRegionKeys();
         
         //Verifica si la combinació de tecles correspon amb la captura de pantalla.
         if(takeScreenshot.size() == keysPressed.size())
@@ -126,6 +127,23 @@ public class GlobalKeyListener implements NativeKeyListener {
                 });
                 
                 System.out.println("Capture region!");
+            }
+        }
+        
+        //Verifica si la combinació de tecles correspon amb la selecció d'una regió
+        if(selectRegion.size() == keysPressed.size())
+        {
+            if(verifyKeysPressed(selectRegion))
+            {
+                Platform.runLater(new Runnable(){
+                    @Override
+                    public void run() {
+                        CaptureRegion.setRegion();
+                    }
+                    
+                });
+                
+                System.out.println("Select region!");
             }
         }
     }
