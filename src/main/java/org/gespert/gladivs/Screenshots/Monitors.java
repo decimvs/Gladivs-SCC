@@ -16,13 +16,18 @@
  */
 package org.gespert.gladivs.Screenshots;
 
+import java.awt.AWTException;
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.Robot;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -88,6 +93,7 @@ public class Monitors {
             Rectangle rec = gc.getBounds();
             Point pt = new Point(rec.x + (rec.width / 2), rec.y + (rec.height / 2));
             MonitorData md = new MonitorData(rec, pt);
+            md.setMonitorIndex(i);
             
             monitors.add(md);
         }

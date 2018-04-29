@@ -19,9 +19,9 @@ package org.gespert.gladivs.Settings;
 
 import java.awt.Point;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.prefs.Preferences;
 import javafx.scene.shape.Rectangle;
@@ -33,7 +33,7 @@ import org.gespert.gladivs.Screenshots.MonitorData;
  */
 public class GeneralSettings extends Settings {
     
-    private HashMap<String, String> settingsChanged = new HashMap<>();
+    private HashMap<String, Object> settingsChanged = new HashMap<>();
     
     /*********************************
      *          SETTERS
@@ -51,7 +51,7 @@ public class GeneralSettings extends Settings {
     
     public void setSelectedRegion(MonitorData md)
     {
-        List<Double> selectedRegionList = Arrays.asList(
+        ArrayList<Double> selectedRegionList = (ArrayList) Arrays.asList(
                 md.getAreaRectangle().getX(), 
                 md.getAreaRectangle().getY(), 
                 md.getAreaRectangle().getWidth(), 
@@ -66,6 +66,21 @@ public class GeneralSettings extends Settings {
         String selectedRegionString = convertDoubleListToStringList(selectedRegionList);
         
         setSettingValue(SELECTED_CAPTURE_REGION, selectedRegionString);
+    }
+    
+    public void setSearchForAppUpdates(boolean b)
+    {
+        setSettingValue(SEARCH_FOR_APP_UPDATES, b);
+    }
+    
+    public void setAutoupdateApplication(boolean b)
+    {
+        setSettingValue(AUTOUPDATE_APPLICATION, b);
+    }
+    
+    public void setAutocloseMainWindow(boolean b)
+    {
+        setSettingValue(AUTOHIDE_MAIN_WINDOW, b);
     }
     
     /*********************************
@@ -88,7 +103,7 @@ public class GeneralSettings extends Settings {
         
         if(setting != null)
         {
-            List<Double> captureRegion = convertStringListToDoubleList(setting);
+            ArrayList<Double> captureRegion = convertStringListToDoubleList(setting);
 
             if(captureRegion.size() != 10)
             {
@@ -112,6 +127,21 @@ public class GeneralSettings extends Settings {
         {
             return new MonitorData();
         }
+    }
+    
+    public boolean getSearchForAppUpdates()
+    {
+        return getSettingValue(SEARCH_FOR_APP_UPDATES, SEARCH_FOR_APP_UPDATES_DEF);
+    }
+    
+    public boolean getAutoupdateApplication()
+    {
+        return getSettingValue(AUTOUPDATE_APPLICATION, AUTOUPDATE_APPLICATION_DEF);
+    }
+    
+    public boolean getAutohideMainWindow()
+    {
+        return getSettingValue(AUTOHIDE_MAIN_WINDOW, AUTOHIDE_MAIN_WINDOW_DEF);
     }
     
     /*********************************
@@ -143,6 +173,12 @@ public class GeneralSettings extends Settings {
     
     public static final String SELECTED_CAPTURE_REGION = "screenshots.selected-capture-region";
     
+    public static final String SEARCH_FOR_APP_UPDATES = "app.search-for-updates";
+    
+    public static final String AUTOUPDATE_APPLICATION = "app.autoupdate-application";
+    
+    public static final String AUTOHIDE_MAIN_WINDOW = "app.autohide-main-window";
+    
     /*********************************************************
      *          Valors per defecte de les preferències
      *********************************************************/
@@ -154,6 +190,12 @@ public class GeneralSettings extends Settings {
     
     public static final String SELECTED_CAPTURE_REGION_DEF = "0,";
     
+    public static final boolean SEARCH_FOR_APP_UPDATES_DEF = true;
+    
+    public static final boolean AUTOUPDATE_APPLICATION_DEF = true;
+    
+    public static final boolean AUTOHIDE_MAIN_WINDOW_DEF = true;
+    
     /*********************************
      *        OTHER METHODS
      ********************************/
@@ -163,13 +205,25 @@ public class GeneralSettings extends Settings {
         settingsChanged.put(setting, value);
     }
     
+    protected void setSettingValue(String setting, boolean b)
+    {
+        settingsChanged.put(setting, b);
+    }
+    
     @Override
     public void saveSettings() {
         Preferences prefs = getPreferences();
-        
-        for(Map.Entry<String, String> e : settingsChanged.entrySet())
+
+        for(Map.Entry<String, Object> e : settingsChanged.entrySet())
         {
-            prefs.put(e.getKey(), e.getValue());
+            if(e.getValue() instanceof String)
+            {
+                prefs.put(e.getKey(), (String) e.getValue());
+            }
+            else
+            {
+                prefs.putBoolean(e.getKey(), (boolean) e.getValue());
+            }
         }
         
         settingsChanged.clear();

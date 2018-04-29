@@ -16,13 +16,9 @@
  */
 package org.gespert.gladivs.GUI.Controllers;
 
-import java.awt.AWTException;
 import java.awt.Point;
-import java.awt.Robot;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.event.EventHandler;
 import javafx.scene.Cursor;
@@ -154,76 +150,71 @@ public class CaptureRegionWindowController implements ScreenshotOptionsPopup, Gl
      */
     private void createNewWindow(MonitorData md)
     {
-        try {
-            monitorData = md;
-            
-            //Preparar les variables
-            stage = new Stage();
-            parentPane = new AnchorPane();
-            root = parentPane;
-            scene = new Scene(root);
-            
-            //Configurar la finestra
-            stage.setScene(scene);
-            stage.initStyle(StageStyle.TRANSPARENT);
-            stage.setX(new Double(md.getMonitorRectangle().x));
-            stage.setY(new Double(md.getMonitorRectangle().y));
-            stage.setWidth(new Double(md.getMonitorRectangle().width));
-            stage.setHeight(new Double(md.getMonitorRectangle().height));
-            stage.setAlwaysOnTop(true);
-            scene.setCursor(Cursor.CROSSHAIR);
-            stage.getIcons().add(new Image(getClass().getResourceAsStream("/icons/icona_sense_sombra.png")));
-            
-            //Configurar les linies de seguiment
-            hLine.setStartX(0);
-            hLine.setEndX(md.getMonitorRectangle().width);
-            vLine.setStartY(0);
-            vLine.setEndY(md.getMonitorRectangle().height);
-            
-            //Afegir contenedor de imatges, obternir la captura i mostrarla
-            bf = new Robot().createScreenCapture(md.getMonitorRectangle());
-            screenImage = SwingFXUtils.toFXImage(bf, null);
-            ImageView imageView = new ImageView(screenImage);
-            AnchorPane.setTopAnchor(imageView, 0d);
-            AnchorPane.setLeftAnchor(imageView, 0d);
-            AnchorPane.setBottomAnchor(imageView, 0d);
-            AnchorPane.setRightAnchor(imageView, 0d);
-            parentPane.getChildren().addAll(imageView, hLine, vLine);
-            
-            //Afegir l'event de tancament de la finestra
-            stage.addEventHandler(KeyEvent.KEY_RELEASED, onKeyReleased);
-            stage.addEventHandler(MouseEvent.MOUSE_PRESSED, onMousePressed);
-            stage.addEventHandler(MouseEvent.MOUSE_DRAGGED, onMouseDragged);
-            stage.addEventHandler(MouseEvent.MOUSE_RELEASED, onMouseReleased);
-            stage.addEventHandler(MouseEvent.MOUSE_MOVED, onMouseMoved);
-            
-            //Subscriure esta finestra en el consumidor de events globals de tecles.
-            //---S'usa per a capturar el event de la tecla ESC a nivell global, així
-            //---es controla que la finestra es puga tancar.
-            KeysListener.getGKListener().addKeyConsumer(this);
-            
-            //Mostrar la finestra amb la captura
-            stage.show();
-            
-            //Posicionar les línies en funció del punter del ratolí
-            Point point = md.getMousePointer();
-            hLine.setStartY(point.getY());
-            hLine.setEndY(point.getY());
-            vLine.setStartX(point.getX());
-            vLine.setEndX(point.getX());
-            
-            if(showArea)
-            {
-                parentPane.getChildren().add(selectionArea);
-                showScreenshotOptionsPopup();
-            }
-            
-            //Assignar el focus al panell de base
-            parentPane.requestFocus();
-            
-        } catch (AWTException ex) {
-            Logger.getLogger(CaptureRegionWindowController.class.getName()).log(Level.SEVERE, null, ex);
+        monitorData = md;
+
+        //Preparar les variables
+        stage = new Stage();
+        parentPane = new AnchorPane();
+        root = parentPane;
+        scene = new Scene(root);
+
+        //Configurar la finestra
+        stage.setScene(scene);
+        stage.initStyle(StageStyle.TRANSPARENT);
+        stage.setX(new Double(md.getMonitorRectangle().x));
+        stage.setY(new Double(md.getMonitorRectangle().y));
+        stage.setWidth(new Double(md.getMonitorRectangle().width));
+        stage.setHeight(new Double(md.getMonitorRectangle().height));
+        stage.setAlwaysOnTop(true);
+        scene.setCursor(Cursor.CROSSHAIR);
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("/icons/icona_sense_sombra.png")));
+
+        //Configurar les linies de seguiment
+        hLine.setStartX(0);
+        hLine.setEndX(md.getMonitorRectangle().width);
+        vLine.setStartY(0);
+        vLine.setEndY(md.getMonitorRectangle().height);
+
+        //Afegir contenedor de imatges, obternir la captura i mostrarla
+        bf = md.getScreenImage();
+        screenImage = SwingFXUtils.toFXImage(bf, null);
+        ImageView imageView = new ImageView(screenImage);
+        AnchorPane.setTopAnchor(imageView, 0d);
+        AnchorPane.setLeftAnchor(imageView, 0d);
+        AnchorPane.setBottomAnchor(imageView, 0d);
+        AnchorPane.setRightAnchor(imageView, 0d);
+        parentPane.getChildren().addAll(imageView, hLine, vLine);
+
+        //Afegir l'event de tancament de la finestra
+        stage.addEventHandler(KeyEvent.KEY_RELEASED, onKeyReleased);
+        stage.addEventHandler(MouseEvent.MOUSE_PRESSED, onMousePressed);
+        stage.addEventHandler(MouseEvent.MOUSE_DRAGGED, onMouseDragged);
+        stage.addEventHandler(MouseEvent.MOUSE_RELEASED, onMouseReleased);
+        stage.addEventHandler(MouseEvent.MOUSE_MOVED, onMouseMoved);
+
+        //Subscriure esta finestra en el consumidor de events globals de tecles.
+        //---S'usa per a capturar el event de la tecla ESC a nivell global, així
+        //---es controla que la finestra es puga tancar.
+        KeysListener.getGKListener().addKeyConsumer(this);
+
+        //Mostrar la finestra amb la captura
+        stage.show();
+
+        //Posicionar les línies en funció del punter del ratolí
+        Point point = md.getMousePointer();
+        hLine.setStartY(point.getY());
+        hLine.setEndY(point.getY());
+        vLine.setStartX(point.getX());
+        vLine.setEndX(point.getX());
+
+        if(showArea)
+        {
+            parentPane.getChildren().add(selectionArea);
+            showScreenshotOptionsPopup();
         }
+
+        //Assignar el focus al panell de base
+        parentPane.requestFocus();
     }
     
     /**

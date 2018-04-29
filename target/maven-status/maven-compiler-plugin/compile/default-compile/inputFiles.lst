@@ -3,9 +3,13 @@ D:\ProjectesNetBeans\Gladivs-SCC\src\main\java\org\gespert\gladivs\TrayMenu\Tray
 D:\ProjectesNetBeans\Gladivs-SCC\src\main\java\org\gespert\gladivs\GUI\OptionsPopup\Controllers\OptionButtonsBase.java
 D:\ProjectesNetBeans\Gladivs-SCC\src\main\java\org\gespert\gladivs\Settings\RuntimeSettings.java
 D:\ProjectesNetBeans\Gladivs-SCC\src\main\java\org\gespert\gladivs\GUI\Controllers\AboutUsDialogController.java
+D:\ProjectesNetBeans\Gladivs-SCC\src\main\java\org\gespert\gladivs\GUI\Stages\MainWindowCreator.java
 D:\ProjectesNetBeans\Gladivs-SCC\src\main\java\org\gespert\gladivs\Settings\KeyboardSettingsHelper.java
+D:\ProjectesNetBeans\Gladivs-SCC\src\main\java\org\gespert\gladivs\GUI\VBoxMiniatura.java
+D:\ProjectesNetBeans\Gladivs-SCC\src\main\java\org\gespert\gladivs\VersionChecker\CheckForUpdates.java
 D:\ProjectesNetBeans\Gladivs-SCC\src\main\java\org\gespert\gladivs\Screenshots\CaptureRegion.java
 D:\ProjectesNetBeans\Gladivs-SCC\src\main\java\org\gespert\gladivs\Screenshots\TakeScreenshot.java
+D:\ProjectesNetBeans\Gladivs-SCC\src\main\java\org\gespert\gladivs\VersionChecker\VersionCheck.java
 D:\ProjectesNetBeans\Gladivs-SCC\src\main\java\org\gespert\gladivs\GUI\OptionsPopup\Controllers\ScreenshotOptionsPopupController.java
 D:\ProjectesNetBeans\Gladivs-SCC\src\main\java\org\gespert\gladivs\GUI\Stages\KeysInputDialogWindowCreator.java
 D:\ProjectesNetBeans\Gladivs-SCC\src\main\java\org\gespert\gladivs\Settings\Settings.java
@@ -21,9 +25,11 @@ D:\ProjectesNetBeans\Gladivs-SCC\src\main\java\org\gespert\gladivs\GUI\Controlle
 D:\ProjectesNetBeans\Gladivs-SCC\src\main\java\org\gespert\gladivs\Instances\KeysListener.java
 D:\ProjectesNetBeans\Gladivs-SCC\src\main\java\org\gespert\gladivs\Instances\SettingsInstance.java
 D:\ProjectesNetBeans\Gladivs-SCC\src\main\java\org\gespert\gladivs\GUI\Controllers\ScreenshotPopupModes.java
+D:\ProjectesNetBeans\Gladivs-SCC\src\main\java\org\gespert\gladivs\GUI\MonitorMiniature.java
 D:\ProjectesNetBeans\Gladivs-SCC\src\main\java\org\gespert\gladivs\Screenshots\MonitorData.java
 D:\ProjectesNetBeans\Gladivs-SCC\src\main\java\org\gespert\gladivs\GUI\GlobalKeyListener.java
 D:\ProjectesNetBeans\Gladivs-SCC\src\main\java\org\gespert\gladivs\Screenshots\ScreenImage.java
+D:\ProjectesNetBeans\Gladivs-SCC\src\main\java\org\gespert\gladivs\GUI\Controllers\MainWindowController.java
 D:\ProjectesNetBeans\Gladivs-SCC\src\main\java\org\gespert\gladivs\MainApp.java
 D:\ProjectesNetBeans\Gladivs-SCC\src\main\java\org\gespert\gladivs\GUI\OptionsPopup\Controllers\CaptureMonitorOptionButtons.java
 D:\ProjectesNetBeans\Gladivs-SCC\src\main\java\org\gespert\gladivs\Settings\KeyboardSettings.java

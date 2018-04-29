@@ -21,6 +21,7 @@ import java.io.File;
 import java.nio.file.Files;
 import java.time.LocalDateTime;
 import javax.imageio.ImageIO;
+import org.gespert.gladivs.Instances.SettingsInstance;
 import org.hashids.Hashids;
 
 /**
@@ -96,5 +97,16 @@ public class ImagesIO {
             .concat(".png");
         
         return fileName;
+    }
+    
+    /**
+     * Retorna una ruta de desat vàlida amb el nom d'arxiu ja creat.
+     * El directori és el directori definit per l'usuari o en cas contrari
+     * el directori predefinit.
+     * @return 
+     */
+    public static File getCompleteImageSavePath()
+    {
+        return new File(SettingsInstance.getGeneralSettings().getUserSelectedImagesSavePath() + "/" + generateFileName());
     }
 }

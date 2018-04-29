@@ -9,7 +9,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="mainAnchorPane" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.gladivs.gladivsssc.GUI.Controllers.MainController">
+<AnchorPane id="AnchorPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" styleClass="mainAnchorPane" stylesheets="@../styles/Styles.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gespert.gladivs.GUI.Controllers.MainWindowController">
    <children>
       <BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <bottom>
@@ -44,7 +44,7 @@
                                     </ImageView>
                                  </graphic>
                               </Button>
-                              <MenuButton fx:id="mnbtSettings" maxHeight="35.0" minHeight="35.0" mnemonicParsing="false" prefHeight="35.0">
+                              <Button fx:id="btnSettings" maxHeight="35.0" minHeight="35.0" mnemonicParsing="false" prefHeight="35.0">
                                  <graphic>
                                     <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                                        <image>
@@ -52,21 +52,7 @@
                                        </image>
                                     </ImageView>
                                  </graphic>
-                                 <items>
-                                    <MenuItem fx:id="mnitKeyboardSettings" mnemonicParsing="false" text="Keyboard settings" />
-                                    <MenuItem fx:id="mnitSettings" mnemonicParsing="false" text="Settings" />
-                                    <CheckMenuItem fx:id="chmnitCheckForUpdates" mnemonicParsing="false" text="Check for new updates" />
-                                    <CheckMenuItem fx:id="chmnitAutohideWindow" mnemonicParsing="false" text="Auto-hide window" />
-                                    <Menu fx:id="mnLangSettings" mnemonicParsing="false" text="Language">
-                                      <items>
-                                        <MenuItem fx:id="mnitLangEnglish" mnemonicParsing="false" text="English" />
-                                          <MenuItem fx:id="mnitLangSpanish" mnemonicParsing="false" text="Español" />
-                                          <MenuItem fx:id="mnitLangCatalan" mnemonicParsing="false" text="Català" />
-                                          <MenuItem fx:id="mnitLangFrench" mnemonicParsing="false" text="Français" />
-                                      </items>
-                                    </Menu>
-                                 </items>
-                              </MenuButton>
+                              </Button>
                               <Button fx:id="btnHelp" mnemonicParsing="false">
                                  <graphic>
                                     <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">

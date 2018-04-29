@@ -16,8 +16,13 @@
  */
 package org.gespert.gladivs.Screenshots;
 
+import java.awt.AWTException;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.Robot;
+import java.awt.image.BufferedImage;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -27,6 +32,7 @@ public class MonitorData {
     private java.awt.Rectangle monitorRectangle;
     private javafx.scene.shape.Rectangle areaRectangle;
     private Point mousePointer;
+    private int monitorIndex;
 
     public MonitorData()
     {
@@ -69,5 +75,26 @@ public class MonitorData {
     public boolean isDefinedSelectionArea()
     {
         return isDefinedMonitorArea() && areaRectangle != null;
+    }
+    
+    public int getMonitorIndex()
+    {
+        return monitorIndex;
+    }
+    
+    public void setMonitorIndex(int index)
+    {
+        monitorIndex = index;
+    }
+    
+    public BufferedImage getScreenImage()
+    {
+        try {
+            return new Robot().createScreenCapture(getMonitorRectangle());
+        } catch (AWTException ex) {
+            Logger.getLogger(TakeScreenshot.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return null;
     }
 }

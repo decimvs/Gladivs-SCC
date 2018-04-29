@@ -18,6 +18,7 @@ package org.gespert.gladivs.Instances;
 
 import org.gespert.gladivs.GUI.Stages.AboutUsWindowCreator;
 import org.gespert.gladivs.GUI.Stages.KeysInputDialogWindowCreator;
+import org.gespert.gladivs.GUI.Stages.MainWindowCreator;
 import org.gespert.gladivs.GUI.Stages.SettingsWindowCreator;
 
 
@@ -31,6 +32,23 @@ public class Windows {
     private static SettingsWindowCreator sdCreator;
     private static KeysInputDialogWindowCreator kidCreator;
     private static AboutUsWindowCreator auCreator;
+    private static MainWindowCreator mwCreator;
+    
+    /**
+     * Retorna una instància de MainWindowCreator, que conté tant
+     * el Stage com el Controller de la finestra.
+     * @return 
+     */
+    public static MainWindowCreator getMainWindow()
+    {
+        if(mwCreator == null)
+        {
+            mwCreator = new MainWindowCreator();
+            mwCreator.createNewWindow();
+        }
+        
+        return mwCreator;
+    }
       
     /**
      * Retorna una instància de SettingsWindowCreator, que conté tant
@@ -83,6 +101,14 @@ public class Windows {
     /*=============================================
                     DESTROYERS
     ===============================================*/
+    
+    /**
+     * Desintància MainWindowCreator
+     */
+    public static void detroyMainWindowCreator()
+    {
+        mwCreator = null;
+    }
     
     /**
      * Desintància SettingsWindowCreator

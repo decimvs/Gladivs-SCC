@@ -21,6 +21,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -28,11 +30,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.DirectoryChooser;
 import org.gespert.gladivs.Instances.SettingsInstance;
 import org.gespert.gladivs.Instances.Windows;
+import org.gespert.gladivs.Settings.GeneralSettings;
 import org.gespert.gladivs.Settings.KeyboardSettings;
 import org.gespert.gladivs.Settings.Settings;
 import org.jnativehook.keyboard.NativeKeyEvent;
@@ -55,8 +59,12 @@ public class SettingsDialogController implements Initializable {
     @FXML
     private TextField txtDefaultDirectory;
     
+    @FXML
+    private CheckBox cbxSearchForUpdates, cbxActivateAutoupdate, cbxAutocloseWindow;
+    
     private List<Settings> updatableChanges;
     private KeyboardSettings kbSettings = SettingsInstance.getKeyboardSettings();
+    private GeneralSettings glSettings = SettingsInstance.getGeneralSettings();
     private String oldDefaultDirectoryValue;
 
     @Override
@@ -68,6 +76,10 @@ public class SettingsDialogController implements Initializable {
         btnSetLastRegionCaptureKeys.addEventHandler(ActionEvent.ACTION, onBtnSetCaptureLastRegionKeysAction);
         btnSetSelectRegionKeys.addEventHandler(ActionEvent.ACTION, onBtnSetSelectRegionKeysAction);
         btnSetCaptureSelectedRegionKeys.addEventHandler(ActionEvent.ACTION, onBtnSetCaptureSelectedRegionKeysAction);
+        
+        cbxSearchForUpdates.selectedProperty().addListener(onSearchForUpdatesChanged);
+        cbxActivateAutoupdate.selectedProperty().addListener(onAutoupdateApplicationChanged);
+        cbxAutocloseWindow.selectedProperty().addListener(onAutohideMainWindowChanged);
         
         btnApply.addEventHandler(ActionEvent.ACTION, onBtnApplyAction);
         btnCancel.addEventHandler(ActionEvent.ACTION, onBtnCancelAction);
@@ -89,9 +101,13 @@ public class SettingsDialogController implements Initializable {
         setCombinationKeys(kbSettings.getSelectRegionKeys(), lblSelectRegionKeys);
         setCombinationKeys(kbSettings.getCaptureSelectedRegionKeys(), lblCaptureSelectedRegion);
         
-        String directoryValue = SettingsInstance.getGeneralSettings().getUserSelectedImagesSavePath();
+        String directoryValue = glSettings.getUserSelectedImagesSavePath();
         txtDefaultDirectory.setText(directoryValue);
         oldDefaultDirectoryValue = directoryValue;
+        
+        cbxSearchForUpdates.setSelected(glSettings.getSearchForAppUpdates());
+        cbxActivateAutoupdate.setSelected(glSettings.getAutoupdateApplication());
+        cbxAutocloseWindow.setSelected(glSettings.getAutohideMainWindow());
     }
     
     /**
@@ -137,12 +153,10 @@ public class SettingsDialogController implements Initializable {
      */
     public void addSettingToUpdatablesList(Settings st)
     {
-        if(updatableChanges.contains(st))
+        if(!updatableChanges.contains(st))
         {
-            updatableChanges.remove(st);
+            updatableChanges.add(st);
         }
-        
-        updatableChanges.add(st);
     }
     
     /**
@@ -312,5 +326,32 @@ public class SettingsDialogController implements Initializable {
         Windows.getKeyInputDialog().getController().setParentKeysLabel(lblCaptureSelectedRegion);
         Windows.getKeyInputDialog().getController().setKeyboardSetting(KeysInputDialogController.CAPTURE_SELECTED_REGION);
         Windows.getKeyInputDialog().getStage().show();
+    };
+    
+    private ChangeListener<Boolean> onSearchForUpdatesChanged = new ChangeListener<Boolean>()
+    {
+        @Override
+        public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+            glSettings.setSearchForAppUpdates(newValue);
+            addSettingToUpdatablesList(glSettings);
+        }  
+    };
+    
+    private ChangeListener<Boolean> onAutoupdateApplicationChanged = new ChangeListener<Boolean>()
+    {
+        @Override
+        public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+            glSettings.setAutoupdateApplication(newValue);
+            addSettingToUpdatablesList(glSettings);
+        }  
+    };
+    
+    private ChangeListener<Boolean> onAutohideMainWindowChanged = new ChangeListener<Boolean>()
+    {
+        @Override
+        public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+            glSettings.setAutocloseMainWindow(newValue);
+            addSettingToUpdatablesList(glSettings);
+        }  
     };
 }

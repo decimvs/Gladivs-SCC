@@ -39,7 +39,7 @@ public abstract class Settings {
      * @param list
      * @return 
      */
-    protected String convertIntegerListToStringList(List<Integer> list)
+    protected String convertIntegerListToStringList(ArrayList<Integer> list)
     {
         int iteration = 0;
         StringBuilder setting = new StringBuilder();
@@ -66,7 +66,7 @@ public abstract class Settings {
      * @param list
      * @return 
      */
-    protected String convertDoubleListToStringList(List<Double> list)
+    protected String convertDoubleListToStringList(ArrayList<Double> list)
     {
         int iteration = 0;
         StringBuilder setting = new StringBuilder();
@@ -122,6 +122,14 @@ public abstract class Settings {
         return null;
     }
     
+    protected boolean getSettingValue(String setting, boolean defaultValue)
+    {
+        Preferences prefs = getPreferences();
+        boolean preference = prefs.getBoolean(setting, defaultValue);
+
+        return preference;
+    }
+    
     /**
      * Retorna una instància de les preferències de la aplicació
      * @return 
@@ -138,7 +146,7 @@ public abstract class Settings {
      * @param list
      * @return 
      */
-    protected List<Integer> convertStringListToIntegerList(String list)
+    protected ArrayList<Integer> convertStringListToIntegerList(String list)
     {
         ArrayList<Integer> elements = new ArrayList();
         
@@ -160,7 +168,7 @@ public abstract class Settings {
      * @param list
      * @return 
      */
-    protected List<Double> convertStringListToDoubleList(String list)
+    protected ArrayList<Double> convertStringListToDoubleList(String list)
     {
         ArrayList<Double> elements = new ArrayList();
         

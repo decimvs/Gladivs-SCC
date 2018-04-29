@@ -113,18 +113,30 @@ public class TrayMenuCreator {
         exitItem.addActionListener(exitListener);
         
         //Afegir elements al popup
+        popupMenu.add(getMainWindowMenuItem());
+        popupMenu.add(getSeparatorItemMenu());
+        
         popupMenu.add(smCaptureMonitor);
         popupMenu.add(smCaptureRegion);
         popupMenu.add(createSelectPredefinedAreaPopupMenu());
         popupMenu.add(getSeparatorItemMenu());
+        
         popupMenu.add(settingsWindowItem);
         popupMenu.add(getHelpMenuItem());
-        
         popupMenu.add(getAboutUsMenuItem());
         popupMenu.add(getSeparatorItemMenu());
+        
         popupMenu.add(exitItem);
         
         return popupMenu;
+    }
+    
+    private MenuItem getMainWindowMenuItem()
+    {
+        MenuItem mainWindow = new MenuItem("Open main window");
+        mainWindow.addActionListener(mainWindowListener);
+        
+        return mainWindow;
     }
     
     private MenuItem getSeparatorItemMenu()
@@ -214,6 +226,14 @@ public class TrayMenuCreator {
         Platform.runLater(new Runnable() {
             public void run(){
                 Windows.getSettingsDialog().getStage().show();
+            }
+        });
+    };
+    
+    private ActionListener mainWindowListener = (ActionEvent e) -> {
+        Platform.runLater(new Runnable() {
+            public void run(){
+                Windows.getMainWindow().getStage().show();
             }
         });
     };

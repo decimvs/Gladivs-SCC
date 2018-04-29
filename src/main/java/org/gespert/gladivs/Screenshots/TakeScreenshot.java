@@ -16,14 +16,10 @@
  */
 package org.gespert.gladivs.Screenshots;
 
-import java.awt.AWTException;
 import java.awt.GraphicsDevice;
 import java.awt.Point;
-import java.awt.Robot;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.stage.Stage;
 import org.gespert.gladivs.GUI.Controllers.ScreenshotPopupModes;
 import org.gespert.gladivs.GUI.ScreenshotOptionsPopup;
@@ -39,16 +35,42 @@ public class TakeScreenshot extends Monitors implements ScreenshotOptionsPopup {
     private BufferedImage screenShot;
     private ScreenshotOptionsPopupCreator sopPopup;
     
+    /**
+     * Pren una captura de pantalla i mostra el popup d'opcions per a
+     * que l'usuari puga gestionar l'imatge.
+     * Esta opció pren la captura del monitor on es trobe el punter del
+     * ratolí.
+     */
     public static void Do()
     {
         takeScreenshot = new TakeScreenshot();
         takeScreenshot.takeScreenshot();
     }
     
+    /**
+     * Pren una captura de pantalla i mostra el popup d'opcions per a
+     * que l'usuari puga gestionar l'imatge.
+     * Utilitza un objecte MonitorData per a determinar quin monitor
+     * realitazarà la captura.
+     * @param md 
+     */
     public static void Do(MonitorData md)
     {
         takeScreenshot = new TakeScreenshot();
         takeScreenshot.takeScreenshot(md);
+    }
+    
+    /**
+     * Realitza una captura de pantalla i la desa directament
+     * a la carpeta seleccionada per l'usuari. No mostra la finestra
+     * popup d'opcions.
+     * 
+     * @param md 
+     */
+    public static void DoAndSave(MonitorData md)
+    {
+        TakeScreenshot takeScreenshot = new TakeScreenshot();
+        takeScreenshot.takeScreenshotAndSave(md);
     }
     
     private void takeScreenshot()
@@ -62,15 +84,17 @@ public class TakeScreenshot extends Monitors implements ScreenshotOptionsPopup {
     
     private void takeScreenshot(MonitorData md)
     {
-        try {
-            screenShot = new Robot().createScreenCapture(md.getMonitorRectangle());
-            
-            sopPopup = new ScreenshotOptionsPopupCreator(this, ScreenshotPopupModes.SCREEN_CAPTURE);
-            sopPopup.createNewPopup(md);
-            
-        } catch (AWTException ex) {
-            Logger.getLogger(TakeScreenshot.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        screenShot = md.getScreenImage();
+
+        sopPopup = new ScreenshotOptionsPopupCreator(this, ScreenshotPopupModes.SCREEN_CAPTURE);
+        sopPopup.createNewPopup(md);
+    }
+    
+    private void takeScreenshotAndSave(MonitorData md)
+    {
+        screenShot = md.getScreenImage();
+        
+        saveCaptureToSelectedLocation(ImagesIO.getCompleteImageSavePath());
     }
 
     @Override

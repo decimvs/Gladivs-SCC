@@ -16,9 +16,9 @@
  */
 package org.gespert.gladivs.Settings;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map.Entry;
 import java.util.prefs.Preferences;
 import org.jnativehook.keyboard.NativeKeyEvent;
@@ -29,7 +29,7 @@ import org.jnativehook.keyboard.NativeKeyEvent;
  */
 public class KeyboardSettings extends Settings{
     
-    private HashMap<String, List<Integer>> settingsChanged = new HashMap<>();
+    private HashMap<String, ArrayList<Integer>> settingsChanged = new HashMap<>();
     
     /*********************************
      *          GETTERS
@@ -39,7 +39,7 @@ public class KeyboardSettings extends Settings{
      * Retorna la combinacio de tecles per a la captura de pantalla
      * @return 
      */
-    public List<Integer> getTakeScrenShotKeys()
+    public ArrayList<Integer> getTakeScrenShotKeys()
     {
         return getKeysValue(TAKE_SCREENSHOT, TAKE_SCREENSHOT_DEF);
     }
@@ -48,7 +48,7 @@ public class KeyboardSettings extends Settings{
      * Retorna la combinacio de tecles per a la captura d'una regió de la pantalla
      * @return 
      */
-    public List<Integer> getCaptureRegionKeys()
+    public ArrayList<Integer> getCaptureRegionKeys()
     {
         return getKeysValue(CAPTURE_REGION, CAPTURE_REGION_DEF);
     }
@@ -58,7 +58,7 @@ public class KeyboardSettings extends Settings{
      * capturada.
      * @return 
      */
-    public List<Integer> getCaptureLastRegionKeys()
+    public ArrayList<Integer> getCaptureLastRegionKeys()
     {
         return getKeysValue(CAPTURE_LAST_REGION, CAPTURE_LAST_REGION_DEF);
     }
@@ -67,7 +67,7 @@ public class KeyboardSettings extends Settings{
      * Retorna la combinacio de tecles per a seleccionar una regió de la pantalla
      * @return 
      */
-    public List<Integer> getSelectRegionKeys()
+    public ArrayList<Integer> getSelectRegionKeys()
     {
         return getKeysValue(SELECT_REGION, SELECT_REGION_DEF);
     }
@@ -77,7 +77,7 @@ public class KeyboardSettings extends Settings{
      * preseleccionada.
      * @return 
      */
-    public List<Integer> getCaptureSelectedRegionKeys()
+    public ArrayList<Integer> getCaptureSelectedRegionKeys()
     {
         return getKeysValue(CAPTURE_SELECTED_REGION, CAPTURE_SELECTED_REGION_DEF);
     }
@@ -90,7 +90,7 @@ public class KeyboardSettings extends Settings{
      * Estableix la combinacio de tecles per a la captura de pantalla
      * @param keys 
      */
-    public void setTakeScreenshotKeys(List<Integer> keys)
+    public void setTakeScreenshotKeys(ArrayList<Integer> keys)
     {
         setKeysValue(KeyboardSettings.TAKE_SCREENSHOT, keys, KeyboardSettings.TAKE_SCREENSHOT_DEF);
     }
@@ -99,7 +99,7 @@ public class KeyboardSettings extends Settings{
      * Estableix la combinacio de tecles par a la captura d'una regió de la pantalla
      * @param keys 
      */
-    public void setCaptureRegionKeys(List<Integer> keys)
+    public void setCaptureRegionKeys(ArrayList<Integer> keys)
     {
         setKeysValue(KeyboardSettings.CAPTURE_REGION, keys, KeyboardSettings.CAPTURE_REGION_DEF);
     }
@@ -109,7 +109,7 @@ public class KeyboardSettings extends Settings{
      * capturada anteriorment
      * @param keys 
      */
-    public void setCaptureLastRegionKeys(List<Integer> keys)
+    public void setCaptureLastRegionKeys(ArrayList<Integer> keys)
     {
         setKeysValue(KeyboardSettings.CAPTURE_LAST_REGION, keys, KeyboardSettings.CAPTURE_LAST_REGION_DEF);
     }
@@ -118,7 +118,7 @@ public class KeyboardSettings extends Settings{
      * Estableix la combinacio de tecles par a la selecció d'una regió de la pantalla
      * @param keys 
      */
-    public void setSelectRegionKeys(List<Integer> keys)
+    public void setSelectRegionKeys(ArrayList<Integer> keys)
     {
         setKeysValue(SELECT_REGION, keys, SELECT_REGION_DEF);
     }
@@ -128,7 +128,7 @@ public class KeyboardSettings extends Settings{
      * preseleccionada
      * @param keys 
      */
-    public void setCaptureSelectedRegionKeys(List<Integer> keys)
+    public void setCaptureSelectedRegionKeys(ArrayList<Integer> keys)
     {
         setKeysValue(CAPTURE_SELECTED_REGION, keys, CAPTURE_SELECTED_REGION_DEF);
     }
@@ -208,19 +208,19 @@ public class KeyboardSettings extends Settings{
      *********************************************************/
     
     //Tecla per defecte per a la captura de pantalla: Impr Pant -> 3639
-    protected static final List<Integer> TAKE_SCREENSHOT_DEF = Arrays.asList(NativeKeyEvent.VC_PRINTSCREEN);
+    protected static final ArrayList<Integer> TAKE_SCREENSHOT_DEF = new ArrayList<Integer>(Arrays.asList(NativeKeyEvent.VC_PRINTSCREEN));
     
     //Combinacio de tecles per a la captura d'una regió de la pantalla: CTRL + Impr Pant -> 29 + 3639
-    protected static final List<Integer> CAPTURE_REGION_DEF = Arrays.asList(NativeKeyEvent.VC_CONTROL_L, NativeKeyEvent.VC_PRINTSCREEN);
+    protected static final ArrayList<Integer> CAPTURE_REGION_DEF = new ArrayList<Integer>(Arrays.asList(NativeKeyEvent.VC_CONTROL_L, NativeKeyEvent.VC_PRINTSCREEN));
     
     //Combinacio de tecles per a la captura d'una regió capturada anteriorment: CTRL + Shift + Impr Pant -> 29 + 42 + 3639
-    protected static final List<Integer> CAPTURE_LAST_REGION_DEF = Arrays.asList(NativeKeyEvent.VC_CONTROL_L, NativeKeyEvent.VC_SHIFT_L, NativeKeyEvent.VC_PRINTSCREEN);
+    protected static final ArrayList<Integer> CAPTURE_LAST_REGION_DEF = new ArrayList<Integer>(Arrays.asList(NativeKeyEvent.VC_CONTROL_L, NativeKeyEvent.VC_SHIFT_L, NativeKeyEvent.VC_PRINTSCREEN));
     
     //Combinacio de tecles per a la definició d'una regió de la pantalla: ALT + Impr Pant -> 56 + 3639
-    protected static final List<Integer> SELECT_REGION_DEF = Arrays.asList(NativeKeyEvent.VC_ALT_L, NativeKeyEvent.VC_PRINTSCREEN);
+    protected static final ArrayList<Integer> SELECT_REGION_DEF = new ArrayList<Integer>(Arrays.asList(NativeKeyEvent.VC_ALT_L, NativeKeyEvent.VC_PRINTSCREEN));
     
     //Combinacio de tecles per a la captura d'una regió preseleccionada: ALT + Shift + Impr Pant -> 56 + 42 + 3639
-    protected static final List<Integer> CAPTURE_SELECTED_REGION_DEF = Arrays.asList(NativeKeyEvent.VC_ALT_L, NativeKeyEvent.VC_SHIFT_L, NativeKeyEvent.VC_PRINTSCREEN);
+    protected static final ArrayList<Integer> CAPTURE_SELECTED_REGION_DEF = new ArrayList<Integer>(Arrays.asList(NativeKeyEvent.VC_ALT_L, NativeKeyEvent.VC_SHIFT_L, NativeKeyEvent.VC_PRINTSCREEN));
     
     /*********************************
      *        OTHER METHODS
@@ -234,9 +234,9 @@ public class KeyboardSettings extends Settings{
      * @param keys
      * @param defaultValue 
      */
-    protected void setKeysValue(String setting, List<Integer> keys, List<Integer> defaultValue)
+    protected void setKeysValue(String setting, ArrayList<Integer> keys, ArrayList<Integer> defaultValue)
     {
-        List<Integer> lKeys;
+        ArrayList<Integer> lKeys;
         
         if(keys != null)
         {
@@ -259,10 +259,10 @@ public class KeyboardSettings extends Settings{
      * @param defaultValue
      * @return 
      */
-    protected List<Integer> getKeysValue(String settingName, List<Integer> defaultValue)
+    protected ArrayList<Integer> getKeysValue(String settingName, ArrayList<Integer> defaultValue)
     {
         Preferences prefs = getPreferences();
-        List<Integer> iKeys;
+        ArrayList<Integer> iKeys;
         String sKeys = prefs.get(settingName, null);
         
         if(sKeys != null)
@@ -297,7 +297,7 @@ public class KeyboardSettings extends Settings{
     {
         Preferences prefs = getPreferences();
         
-        for(Entry<String, List<Integer>> e : settingsChanged.entrySet())
+        for(Entry<String, ArrayList<Integer>> e : settingsChanged.entrySet())
         {
             String sKeys = convertIntegerListToStringList(e.getValue());
             

@@ -23,6 +23,7 @@ import static javafx.application.Application.launch;
 import javafx.application.Platform;
 import org.gespert.gladivs.Instances.KeysListener;
 import org.gespert.gladivs.Instances.SystemTray;
+import org.gespert.gladivs.Instances.Windows;
 
 
 public class MainApp extends Application {
@@ -50,6 +51,7 @@ public class MainApp extends Application {
         else
         {
             System.out.println("System tray icon is not supported in this system.");
+            Windows.getMainWindow().getStage().show();
         }
     }
 
