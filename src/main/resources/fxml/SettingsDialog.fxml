@@ -10,7 +10,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="275.0" prefWidth="650.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gespert.gladivs.GUI.Controllers.SettingsDialogController">
+<AnchorPane id="AnchorPane" prefHeight="247.0" prefWidth="650.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gespert.gladivs.GUI.Controllers.SettingsDialogController">
     <stylesheets>
         <URL value="@/styles/Styles.css" />
     </stylesheets>
@@ -19,12 +19,12 @@
          <center>
             <TabPane prefHeight="191.0" prefWidth="361.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
               <tabs>
-                <Tab text="Configuració">
+                <Tab text="%conf_configuration_tab">
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
                               <BorderPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                 <center>
+                                 <left>
                                     <GridPane prefHeight="258.0" prefWidth="625.0" BorderPane.alignment="CENTER">
                                       <columnConstraints>
                                         <ColumnConstraints hgrow="SOMETIMES" />
@@ -50,21 +50,29 @@
                                              </graphic>
                                           </Button>
                                           <Label text="Idioma de la aplicació" GridPane.rowIndex="1" />
-                                          <ComboBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="316.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                          <CheckBox fx:id="cbxSearchForUpdates" mnemonicParsing="false" text="Activar verficació d'actualitzacions" GridPane.rowIndex="2" />
-                                          <CheckBox fx:id="cbxActivateAutoupdate" mnemonicParsing="false" text="Activar la actualització automàtica" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="2" />
-                                          <CheckBox fx:id="cbxAutocloseWindow" mnemonicParsing="false" text="Autotancar la finestra durant la captura" GridPane.rowIndex="3" />
+                                          <CheckBox fx:id="cbxSearchForUpdates" mnemonicParsing="false" text="Activar verficació d'actualitzacions" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="2">
+                                             <GridPane.margin>
+                                                <Insets left="1.0" />
+                                             </GridPane.margin></CheckBox>
+                                          <CheckBox fx:id="cbxActivateAutoupdate" mnemonicParsing="false" text="Activar la actualització automàtica" visible="false" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="2" />
+                                          <CheckBox fx:id="cbxAutocloseWindow" mnemonicParsing="false" text="Autotancar la finestra durant la captura" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="3">
+                                             <GridPane.margin>
+                                                <Insets left="1.0" />
+                                             </GridPane.margin></CheckBox>
+                                          <Label text="Buscar actualitzacions" GridPane.rowIndex="2" />
+                                          <Label text="Autotancament de la finestra" GridPane.rowIndex="3" />
+                                          <ComboBox fx:id="cmbLanguages" prefHeight="32.0" prefWidth="316.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                        </children>
                                        <BorderPane.margin>
                                           <Insets bottom="15.0" left="10.0" right="10.0" top="15.0" />
                                        </BorderPane.margin>
                                     </GridPane>
-                                 </center>
+                                 </left>
                               </BorderPane>
                            </children></AnchorPane>
                   </content>
                 </Tab>
-                <Tab text="Tecles">
+                <Tab text="%conf_keys_tab">
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
@@ -88,11 +96,11 @@
                                              <children>
                                                 <Label text="Captura de pantalla" />
                                                 <Label text="Captura de regió" GridPane.rowIndex="1" />
-                                                <Button fx:id="btnSetMonitorCaptureKeys" mnemonicParsing="false" text="Modificar" GridPane.columnIndex="2">
+                                                <Button fx:id="btnSetMonitorCaptureKeys" mnemonicParsing="false" text="%conf_keys_tab_button_modify_keys" GridPane.columnIndex="2">
                                                    <GridPane.margin>
                                                       <Insets top="5.0" />
                                                    </GridPane.margin></Button>
-                                                <Button fx:id="btnSetRegionCaptureKeys" mnemonicParsing="false" text="Modificar" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                                <Button fx:id="btnSetRegionCaptureKeys" mnemonicParsing="false" text="%conf_keys_tab_button_modify_keys" GridPane.columnIndex="2" GridPane.rowIndex="1">
                                                    <GridPane.margin>
                                                       <Insets top="5.0" />
                                                    </GridPane.margin></Button>
@@ -100,19 +108,19 @@
                                                 <Label fx:id="lblRegionCapture" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                                 <Label text="Capturar l'última regió" GridPane.rowIndex="2" />
                                                 <Label fx:id="lblLastRegionCapture" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                                <Button fx:id="btnSetLastRegionCaptureKeys" mnemonicParsing="false" text="Modificar" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                                                <Button fx:id="btnSetLastRegionCaptureKeys" mnemonicParsing="false" text="%conf_keys_tab_button_modify_keys" GridPane.columnIndex="2" GridPane.rowIndex="2">
                                                    <GridPane.margin>
                                                       <Insets top="5.0" />
                                                    </GridPane.margin></Button>
                                                 <Label text="Capturar regió preseleccionada" GridPane.rowIndex="4" />
                                                 <Label fx:id="lblCaptureSelectedRegion" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                                                <Button fx:id="btnSetCaptureSelectedRegionKeys" mnemonicParsing="false" text="Modificar" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                                                <Button fx:id="btnSetCaptureSelectedRegionKeys" mnemonicParsing="false" text="%conf_keys_tab_button_modify_keys" GridPane.columnIndex="2" GridPane.rowIndex="4">
                                                    <GridPane.margin>
                                                       <Insets top="5.0" />
                                                    </GridPane.margin></Button>
                                                 <Label text="Seleccionar una regió" GridPane.rowIndex="3" />
                                                 <Label fx:id="lblSelectRegionKeys" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                                <Button fx:id="btnSetSelectRegionKeys" mnemonicParsing="false" text="Modificar" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                                                <Button fx:id="btnSetSelectRegionKeys" mnemonicParsing="false" text="%conf_keys_tab_button_modify_keys" GridPane.columnIndex="2" GridPane.rowIndex="3">
                                                    <GridPane.margin>
                                                       <Insets top="5.0" />
                                                    </GridPane.margin>
@@ -134,19 +142,19 @@
             </TabPane>
          </center>
          <bottom>
-            <HBox alignment="CENTER_RIGHT" prefHeight="35.0" BorderPane.alignment="CENTER">
+            <HBox alignment="CENTER_RIGHT" prefHeight="0.0" prefWidth="650.0" BorderPane.alignment="CENTER">
                <children>
-                  <Button fx:id="btnAccept" mnemonicParsing="false" text="Aceptar">
+                  <Button fx:id="btnAccept" mnemonicParsing="false" text="%conf_window_accept_button">
                      <HBox.margin>
                         <Insets right="10.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="btnApply" mnemonicParsing="false" text="Aplicar">
+                  <Button fx:id="btnApply" mnemonicParsing="false" text="%conf_window_apply_button">
                      <HBox.margin>
                         <Insets right="10.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="btnCancel" mnemonicParsing="false" text="Cancelar" />
+                  <Button fx:id="btnCancel" mnemonicParsing="false" text="%conf_window_cancel_button" />
                </children>
                <padding>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />

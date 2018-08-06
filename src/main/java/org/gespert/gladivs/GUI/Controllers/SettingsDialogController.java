@@ -20,6 +20,7 @@ import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -31,12 +32,14 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.DirectoryChooser;
 import org.gespert.gladivs.Instances.SettingsInstance;
 import org.gespert.gladivs.Instances.Windows;
 import org.gespert.gladivs.Settings.GeneralSettings;
+import org.gespert.gladivs.Settings.InterfaceLanguages;
 import org.gespert.gladivs.Settings.KeyboardSettings;
 import org.gespert.gladivs.Settings.Settings;
 import org.jnativehook.keyboard.NativeKeyEvent;
@@ -62,10 +65,14 @@ public class SettingsDialogController implements Initializable {
     @FXML
     private CheckBox cbxSearchForUpdates, cbxActivateAutoupdate, cbxAutocloseWindow;
     
+    @FXML
+    private ComboBox cmbLanguages;
+    
     private List<Settings> updatableChanges;
     private KeyboardSettings kbSettings = SettingsInstance.getKeyboardSettings();
     private GeneralSettings glSettings = SettingsInstance.getGeneralSettings();
     private String oldDefaultDirectoryValue;
+    private boolean languageSelectionLoadFinished = false;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -85,6 +92,8 @@ public class SettingsDialogController implements Initializable {
         btnCancel.addEventHandler(ActionEvent.ACTION, onBtnCancelAction);
         btnAccept.addEventHandler(ActionEvent.ACTION, onBtnAcceptAction);
         btnSelectDefaultDirectory.addEventHandler(ActionEvent.ACTION, onBtnSelectDefaultDirectory);
+        
+        cmbLanguages.valueProperty().addListener(onSelectLanguageComboboxChanged);
         
         loadCurrentSettingsValues();
     }
@@ -108,6 +117,8 @@ public class SettingsDialogController implements Initializable {
         cbxSearchForUpdates.setSelected(glSettings.getSearchForAppUpdates());
         cbxActivateAutoupdate.setSelected(glSettings.getAutoupdateApplication());
         cbxAutocloseWindow.setSelected(glSettings.getAutohideMainWindow());
+        
+        languagesComboBoxPopulate();
     }
     
     /**
@@ -273,6 +284,20 @@ public class SettingsDialogController implements Initializable {
         return selectedPath;
     }
     
+    private void languagesComboBoxPopulate()
+    {
+        InterfaceLanguages il = new InterfaceLanguages();
+        
+        cmbLanguages.getItems().addAll(il.getAvailableInterfaceLanguagesList());
+        
+        if(il.getLocaleLanguage() != null)
+        {
+            cmbLanguages.getSelectionModel().select(il.getLocaleLanguage());
+        }
+        
+        languageSelectionLoadFinished = true;
+    }
+    
     private EventHandler<ActionEvent> onBtnSelectDefaultDirectory = (evt) -> {
     
         txtDefaultDirectory.setText(showDirectoryChooser(txtDefaultDirectory.getText()).getAbsolutePath());
@@ -353,5 +378,24 @@ public class SettingsDialogController implements Initializable {
             glSettings.setAutocloseMainWindow(newValue);
             addSettingToUpdatablesList(glSettings);
         }  
+    };
+    
+    private ChangeListener<InterfaceLanguages.LanguageObject> onSelectLanguageComboboxChanged = new ChangeListener<InterfaceLanguages.LanguageObject>()
+    {
+        @Override
+        public void changed(ObservableValue<? extends InterfaceLanguages.LanguageObject> observable, InterfaceLanguages.LanguageObject oldValue, InterfaceLanguages.LanguageObject newValue) {
+            if(languageSelectionLoadFinished)
+            {
+                Locale.setDefault(new Locale(newValue.getLangCode()));
+            
+                glSettings.setInterfaceLanguage(newValue.getLangCode());
+                addSettingToUpdatablesList(glSettings);
+
+                Alert alert = new Alert(AlertType.INFORMATION);
+                alert.setTitle("Interface language change");
+                alert.setContentText("The new language configuration will take effect after restarting the program.");
+                alert.show();
+            }
+        }
     };
 }

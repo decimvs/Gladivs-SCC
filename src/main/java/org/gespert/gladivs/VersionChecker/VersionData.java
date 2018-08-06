@@ -21,7 +21,7 @@ package org.gespert.gladivs.VersionChecker;
  *
  * @author Guillermo Espert Carrasquer <gespert at yahoo dot es>
  */
-public class VersionCheck {
+public class VersionData {
     
     private String latest_version;
     private String download_link;

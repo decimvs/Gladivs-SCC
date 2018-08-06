@@ -90,6 +90,11 @@ public class TrayMenuCreator {
         tray.remove(trayIcon);
     }
     
+    public TrayIcon getTrayIcon()
+    {
+        return trayIcon;
+    }
+    
     /**
      * Genera el popup menú
      * @return 

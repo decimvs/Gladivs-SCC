@@ -17,13 +17,16 @@
 
 package org.gespert.gladivs;
 
+import java.util.Locale;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import static javafx.application.Application.launch;
 import javafx.application.Platform;
 import org.gespert.gladivs.Instances.KeysListener;
+import org.gespert.gladivs.Instances.SettingsInstance;
 import org.gespert.gladivs.Instances.SystemTray;
 import org.gespert.gladivs.Instances.Windows;
+import org.gespert.gladivs.TrayMenu.CheckForUpdates;
 
 
 public class MainApp extends Application {
@@ -42,11 +45,26 @@ public class MainApp extends Application {
     @Override
     public void start(Stage stage) throws Exception 
     {  
+        //S'usa per a evitar el tancament de la aplicació si no hi ha cap formulari
+        //obert
         Platform.setImplicitExit(false);
+        
+        //Establim la llengua predeterminada
+        String languageCode = SettingsInstance.getGeneralSettings().getInterfaceLanguage();
+        
+        if(languageCode != null && !languageCode.equals("null"))
+        {
+            Locale.setDefault(new Locale(languageCode));
+        }
         
         if(java.awt.SystemTray.isSupported())
         {
             SystemTray.getInstance().displayIconInTray();
+            
+            if(SettingsInstance.getGeneralSettings().getSearchForAppUpdates())
+            {
+                CheckForUpdates.checkForUpdates();
+            }
         }
         else
         {

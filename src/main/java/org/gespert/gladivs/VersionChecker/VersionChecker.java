@@ -25,14 +25,14 @@ import org.gespert.gladivs.MainApp;
  *
  * @author Guillermo Espert Carrasquer <gespert at yahoo dot es>
  */
-public class CheckForUpdates {
+public class VersionChecker {
     
-    public static VersionCheck checkForUpdates()
+    public static VersionData checkForUpdates()
     {   
         ObjectMapper mapper = new ObjectMapper();
 
         try {
-            VersionCheck latest = mapper.readValue(new URL("https://updates.gladivs.com/versioncheck/GladivsSSC"), VersionCheck.class);
+            VersionData latest = mapper.readValue(new URL("https://updates.gladivs.com/versioncheck/GladivsSC"), VersionData.class);
 
             if(latest.getLatest_version().equals(MainApp.APP_VERSION))
             {

@@ -1,11 +1,10 @@
+org\gespert\gladivs\TrayMenu\CheckForUpdates.class
 org\gespert\gladivs\GUI\Controllers\CaptureRegionWindowController$2.class
 org\gespert\gladivs\GUI\GlobalKeyListener$2.class
 org\gespert\gladivs\GUI\Controllers\AboutUsDialogController.class
 org\gespert\gladivs\TrayMenu\TrayMenuCreator$1.class
 org\gespert\gladivs\GUI\MonitorMiniature$2.class
-org\gespert\gladivs\VersionChecker\CheckForUpdates.class
 org\gespert\gladivs\GUI\OptionsPopup\Controllers\CaptureRegionOptionButtons.class
-org\gespert\gladivs\GUI\Controllers\MainWindowController$3.class
 org\gespert\gladivs\GUI\Controllers\CaptureRegionWindowController$5.class
 org\gespert\gladivs\Screenshots\Monitors.class
 org\gespert\gladivs\GUI\OptionsPopup\Controllers\ScreenshotOptionsPopupController$1.class
@@ -29,11 +28,14 @@ org\gespert\gladivs\GUI\GlobalKeyListener$1.class
 org\gespert\gladivs\Settings\KeyboardSettings.class
 org\gespert\gladivs\GUI\OptionsPopup\ScreenshotOptionsPopupCreator$1.class
 org\gespert\gladivs\GUI\OptionsPopup\Controllers\CaptureMonitorOptionButtons$3.class
+org\gespert\gladivs\GUI\Controllers\SettingsDialogController$4.class
+org\gespert\gladivs\VersionChecker\VersionData.class
 org\gespert\gladivs\Settings\RuntimeSettings.class
+org\gespert\gladivs\Settings\InterfaceLanguages$LanguageObject.class
 org\gespert\gladivs\GUI\ScreenshotOptionsPopup.class
+org\gespert\gladivs\Settings\InterfaceLanguages.class
 org\gespert\gladivs\GUI\MonitorMiniature$5.class
 org\gespert\gladivs\TrayMenu\TrayMenuCreator$5.class
-org\gespert\gladivs\VersionChecker\VersionCheck.class
 org\gespert\gladivs\Settings\GeneralSettings.class
 org\gespert\gladivs\TrayMenu\TrayMenuCreator.class
 org\gespert\gladivs\GUI\Controllers\CaptureRegionWindowController.class
@@ -58,6 +60,7 @@ org\gespert\gladivs\GUI\Controllers\MainWindowController$2.class
 org\gespert\gladivs\GUI\OptionsPopup\Controllers\CaptureRegionOptionButtons$4.class
 org\gespert\gladivs\GUI\GlobalKeyConsumer.class
 org\gespert\gladivs\GUI\Stages\KeysInputDialogWindowCreator.class
+org\gespert\gladivs\VersionChecker\VersionChecker.class
 org\gespert\gladivs\GUI\OptionsPopup\Controllers\CaptureRegionOptionButtons$2.class
 org\gespert\gladivs\GUI\Controllers\MainWindowController$1.class
 org\gespert\gladivs\GUI\OptionsPopup\Controllers\CaptureMonitorOptionButtons.class

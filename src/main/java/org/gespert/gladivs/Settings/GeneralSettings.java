@@ -83,6 +83,11 @@ public class GeneralSettings extends Settings {
         setSettingValue(AUTOHIDE_MAIN_WINDOW, b);
     }
     
+    public void setInterfaceLanguage(String s)
+    {
+        setSettingValue(INTERFACE_LANGUAGE, s);
+    }
+    
     /*********************************
      *          GETTERS
      ********************************/
@@ -144,6 +149,11 @@ public class GeneralSettings extends Settings {
         return getSettingValue(AUTOHIDE_MAIN_WINDOW, AUTOHIDE_MAIN_WINDOW_DEF);
     }
     
+    public String getInterfaceLanguage()
+    {
+        return getSettingValue(INTERFACE_LANGUAGE, INTERFACE_LANGUAGE_DEF);
+    }
+    
     /*********************************
      *         EMPTY
      *********************************/
@@ -179,6 +189,8 @@ public class GeneralSettings extends Settings {
     
     public static final String AUTOHIDE_MAIN_WINDOW = "app.autohide-main-window";
     
+    public static final String INTERFACE_LANGUAGE = "app.interface-language";
+    
     /*********************************************************
      *          Valors per defecte de les preferències
      *********************************************************/
@@ -195,6 +207,8 @@ public class GeneralSettings extends Settings {
     public static final boolean AUTOUPDATE_APPLICATION_DEF = true;
     
     public static final boolean AUTOHIDE_MAIN_WINDOW_DEF = true;
+    
+    public static final String INTERFACE_LANGUAGE_DEF = null;
     
     /*********************************
      *        OTHER METHODS

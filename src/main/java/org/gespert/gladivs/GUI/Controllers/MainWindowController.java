@@ -45,6 +45,8 @@ import org.gespert.gladivs.Instances.SettingsInstance;
 import org.gespert.gladivs.Instances.Windows;
 import org.gespert.gladivs.Screenshots.MonitorData;
 import org.gespert.gladivs.Screenshots.Monitors;
+import org.gespert.gladivs.VersionChecker.VersionChecker;
+import org.gespert.gladivs.VersionChecker.VersionData;
 
 public class MainWindowController implements Initializable {
     
@@ -56,10 +58,10 @@ public class MainWindowController implements Initializable {
     private Button btnAboutUs, btnHelp, btnSettings;
     @FXML
     private Hyperlink hlkDownloadUpdate;
-            
-    private String updateDownloadLink;
+    
     private ResourceBundle rb;
     private String defaultLanguage;    
+    private VersionData versionData;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) 
@@ -69,6 +71,7 @@ public class MainWindowController implements Initializable {
         btnAboutUs.addEventFilter(ActionEvent.ACTION, onButtonAboutUsActionEvent);
         btnHelp.addEventHandler(ActionEvent.ACTION, onButtonHelpActionPerformed);
         btnSettings.addEventHandler(ActionEvent.ACTION, onBtnSettingsActionPerformed);
+        hlkDownloadUpdate.addEventHandler(ActionEvent.ACTION, onUpdatesLinkActionPerformed);
         
         //Set background color for monitor pane
         contenedorImatges.setStyle("-fx-background-color: #000000;");
@@ -87,22 +90,7 @@ public class MainWindowController implements Initializable {
         
         //Load with default locale (set or by user o JVM default if not is set by user)
         this.rb = ResourceBundle.getBundle("bundles.Main");
-        
-        /*if(configuration.getUserValues().get(configuration.CHECK_UPDATES).getIntValue() == 1){
-            chmnitCheckForUpdates.setSelected(true);
-        } else {
-            chmnitCheckForUpdates.setSelected(false);
-        }*/
-        
-        /*if(configuration.getUserValues().get(configuration.AUTOHIDE_WINDOW).getIntValue() == 0)
-        {
-            chmnitAutohideWindow.setSelected(false);
-        }
-        else
-        {
-            chmnitAutohideWindow.setSelected(true);
-        }*/
-        
+
         //Populate monitor pane
         populateMonitorContainer();
         
@@ -111,6 +99,9 @@ public class MainWindowController implements Initializable {
         
         //Set the tooltips for some UI elements
         setUiElementsToolTips();
+        
+        //Verifica si la aplicació està actualitzada
+        checkForUpdates();
         
         //Establir la ruta de la carpeta seleccionada per a desar les imatges
         lblFolder.setText(SettingsInstance.getGeneralSettings().getUserSelectedImagesSavePath());
@@ -126,6 +117,35 @@ public class MainWindowController implements Initializable {
         
         //Recalculate UI size to arrange all elements inside
         Windows.getMainWindow().getStage().sizeToScene();
+    }
+    
+    /**
+     * 
+     */
+    private void checkForUpdates()
+    {
+        if(SettingsInstance.getGeneralSettings().getSearchForAppUpdates())
+        {
+            versionData = VersionChecker.checkForUpdates();
+            
+            if(versionData != null)
+            {
+                hlkDownloadUpdate.setVisible(true);
+                hlkDownloadUpdate.setText("New version of GladivsSC available: " + versionData.getLatest_version());
+                lblUpdateInfo.setVisible(false);
+            }
+            else
+            {
+                lblUpdateInfo.setVisible(true);
+                lblUpdateInfo.setText("Your application is up to date");
+                hlkDownloadUpdate.setVisible(false);
+            }
+        }
+        else
+        {
+            lblUpdateInfo.setVisible(false);
+            hlkDownloadUpdate.setVisible(false);
+        }
     }
     
     private void setUiElementsToolTips()
@@ -151,6 +171,18 @@ public class MainWindowController implements Initializable {
     //  EVENTS
     //
     //#################
+    
+    private EventHandler<ActionEvent> onUpdatesLinkActionPerformed = (evt) ->
+    {
+        if(versionData != null)
+        {
+            try {
+                Desktop.getDesktop().browse(URI.create(versionData.getDownload_link()));
+            } catch (IOException ex) {
+                Logger.getLogger(MainWindowController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    };
     
     private EventHandler<MouseEvent> onLblFolderMouseButtonReleased = new EventHandler<MouseEvent>() {
         @Override
@@ -179,18 +211,7 @@ public class MainWindowController implements Initializable {
     private EventHandler<ActionEvent> onBtnSettingsActionPerformed = (event) -> {
         Windows.getSettingsDialog().getStage().show();
     };
-    
-    private EventHandler<ActionEvent> onUpdateDownloadLinkActionPerformed = new EventHandler<ActionEvent>() {
-        @Override
-        public void handle(ActionEvent event) {
-            try {
-                Desktop.getDesktop().browse(URI.create(updateDownloadLink));
-            } catch (IOException ex) {
-                Logger.getLogger(MainWindowController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    };
-    
+
     private EventHandler<ActionEvent> onButtonHelpActionPerformed = new EventHandler<ActionEvent>() {
         @Override
         public void handle(ActionEvent event) {

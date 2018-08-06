@@ -17,6 +17,7 @@
 package org.gespert.gladivs.GUI.Stages;
 
 import java.io.IOException;
+import java.util.ResourceBundle;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -41,7 +42,10 @@ public class SettingsWindowCreator {
             final FXMLLoader loader = new FXMLLoader(
                 getClass().getResource("/fxml/SettingsDialog.fxml")
             );
-
+            
+            //Carreguem el fitxer de llengua que corresponga
+            loader.setResources(ResourceBundle.getBundle("bundles.Main"));
+            
             //Load FXML file
             root = (Parent) loader.load();
             
