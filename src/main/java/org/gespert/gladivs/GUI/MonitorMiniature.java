@@ -27,6 +27,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
@@ -60,10 +61,14 @@ public class MonitorMiniature {
     //Option buttons variables
     private ImageView area, screenshot, popup, reload;
     private ResourceBundle btnStyles;
-    public Pane pArea, pReload;
+    private Pane pArea, pReload;
+    private ResourceBundle rb;
     
     public MonitorMiniature(MonitorData md)
     {
+        //Load with default locale (set or by user o JVM default if not is set by user)
+        this.rb = ResourceBundle.getBundle("bundles.Main");
+
         monitorData = md;
         
         //Creació i configuració de la VBox
@@ -118,13 +123,16 @@ public class MonitorMiniature {
         //--> Create option icons and add in options area
         btnStyles = ResourceBundle.getBundle("styles.monitorMiniatureButtons");
         
-        //Button select area
+        //Button select area -------------------------------->
         area = new ImageView();
         area.setId("btnArea");
         area.setImage(new Image(getClass().getResourceAsStream("/icons/selArea_50px.png")));
         area.setFitWidth(25);
         area.setFitHeight(25);
         area.setStyle(btnStyles.getString("btnAreaNormal"));
+
+        //Tooltip del select area
+        Tooltip areaTT = new Tooltip(rb.getString("main_window_area_button_tooltip"));
         
         pArea = new Pane();
         pArea.setMaxSize(25, 25);
@@ -133,15 +141,61 @@ public class MonitorMiniature {
         pArea.addEventFilter(MouseEvent.MOUSE_EXITED, onOptionsAreaButtonExit);
         pArea.addEventFilter(MouseEvent.MOUSE_PRESSED, onOptionAreaButtonPressed);
         pArea.addEventFilter(MouseEvent.MOUSE_RELEASED, onAreaButtonMouseReleased);
+        Tooltip.install(pArea, areaTT);
         recOptions.getChildren().add(pArea);
-        
-        //Button select reload
+
+        //Button take screenshot ------------------------->
+        screenshot = new ImageView();
+        screenshot.setId("btnScreenshot");
+        screenshot.setImage(new Image(getClass().getResourceAsStream("/icons/takeScreenshot_50px.png")));
+        screenshot.setFitWidth(30);
+        screenshot.setFitHeight(30);
+        screenshot.setStyle(btnStyles.getString("btnScreenshotNormal"));
+
+        //Tooltip del botó screenshot
+        Tooltip screenshotTT = new Tooltip(rb.getString("main_window_screenshot_button_tooltip"));
+
+        Pane pScreenshot = new Pane();
+        pScreenshot.setMaxSize(30, 30);
+        pScreenshot.getChildren().add(screenshot);
+        pScreenshot.addEventFilter(MouseEvent.MOUSE_ENTERED, onOptionAreaButtonEnter);
+        pScreenshot.addEventFilter(MouseEvent.MOUSE_EXITED, onOptionsAreaButtonExit);
+        pScreenshot.addEventFilter(MouseEvent.MOUSE_PRESSED, onOptionAreaButtonPressed);
+        pScreenshot.addEventFilter(MouseEvent.MOUSE_RELEASED, onAreaButtonMouseReleased);
+        Tooltip.install(pScreenshot, screenshotTT);
+        recOptions.getChildren().add(pScreenshot);
+
+        //Button open popup ----------------------------->
+        popup = new ImageView();
+        popup.setId("btnPopup");
+        popup.setImage(new Image(getClass().getResourceAsStream("/icons/openPopup_50px.png")));
+        popup.setFitWidth(30);
+        popup.setFitHeight(30);
+        popup.setStyle(btnStyles.getString("btnPopupNormal"));
+
+        //Tooltip del popup button
+        Tooltip popupTT = new Tooltip(rb.getString("main_window_popup_button_tooltip"));
+
+        Pane pPopup = new Pane();
+        pPopup.setMaxSize(30, 30);
+        pPopup.getChildren().add(popup);
+        pPopup.addEventFilter(MouseEvent.MOUSE_ENTERED, onOptionAreaButtonEnter);
+        pPopup.addEventFilter(MouseEvent.MOUSE_EXITED, onOptionsAreaButtonExit);
+        pPopup.addEventFilter(MouseEvent.MOUSE_PRESSED, onOptionAreaButtonPressed);
+        pPopup.addEventFilter(MouseEvent.MOUSE_RELEASED, onAreaButtonMouseReleased);
+        Tooltip.install(pPopup, popupTT);
+        recOptions.getChildren().add(pPopup);
+
+        //Button reload monitor ------------------------->
         reload = new ImageView();
         reload.setId("btnReload");
         reload.setImage(new Image(getClass().getResourceAsStream("/icons/reload_50px.png")));
         reload.setFitWidth(25);
         reload.setFitHeight(25);
         reload.setStyle(btnStyles.getString("btnReloadNormal"));
+
+        //Tooltip del reload monitor
+        Tooltip reloadTT = new Tooltip(rb.getString("main_window_reload_button_tooltip"));
         
         pReload = new Pane();
         pReload.setMaxSize(25, 25);
@@ -150,41 +204,8 @@ public class MonitorMiniature {
         pReload.addEventFilter(MouseEvent.MOUSE_EXITED, onOptionsAreaButtonExit);
         pReload.addEventFilter(MouseEvent.MOUSE_PRESSED, onOptionAreaButtonPressed);
         pReload.addEventFilter(MouseEvent.MOUSE_RELEASED, onAreaButtonMouseReleased);
+        Tooltip.install(pReload, reloadTT);
         recOptions.getChildren().add(pReload);
-        
-        //Button take screenshot
-        screenshot = new ImageView();
-        screenshot.setId("btnScreenshot");
-        screenshot.setImage(new Image(getClass().getResourceAsStream("/icons/takeScreenshot_50px.png")));
-        screenshot.setFitWidth(30);
-        screenshot.setFitHeight(30);
-        screenshot.setStyle(btnStyles.getString("btnScreenshotNormal"));
-        
-        Pane pScreenshot = new Pane();
-        pScreenshot.setMaxSize(30, 30);
-        pScreenshot.getChildren().add(screenshot);
-        pScreenshot.addEventFilter(MouseEvent.MOUSE_ENTERED, onOptionAreaButtonEnter);
-        pScreenshot.addEventFilter(MouseEvent.MOUSE_EXITED, onOptionsAreaButtonExit);
-        pScreenshot.addEventFilter(MouseEvent.MOUSE_PRESSED, onOptionAreaButtonPressed);
-        pScreenshot.addEventFilter(MouseEvent.MOUSE_RELEASED, onAreaButtonMouseReleased);
-        recOptions.getChildren().add(pScreenshot);
-        
-        //Button open popup
-        popup = new ImageView();
-        popup.setId("btnPopup");
-        popup.setImage(new Image(getClass().getResourceAsStream("/icons/openPopup_50px.png")));
-        popup.setFitWidth(30);
-        popup.setFitHeight(30);
-        popup.setStyle(btnStyles.getString("btnPopupNormal"));
-        
-        Pane pPopup = new Pane();
-        pPopup.setMaxSize(30, 30);
-        pPopup.getChildren().add(popup);
-        pPopup.addEventFilter(MouseEvent.MOUSE_ENTERED, onOptionAreaButtonEnter);
-        pPopup.addEventFilter(MouseEvent.MOUSE_EXITED, onOptionsAreaButtonExit);
-        pPopup.addEventFilter(MouseEvent.MOUSE_PRESSED, onOptionAreaButtonPressed);
-        pPopup.addEventFilter(MouseEvent.MOUSE_RELEASED, onAreaButtonMouseReleased);
-        recOptions.getChildren().add(pPopup);
         
         //--> Create a container for miniature and options area
         Pane pane = new Pane();
@@ -211,8 +232,12 @@ public class MonitorMiniature {
     public VBoxMiniatura getMiniature(){
         return vb;
     }
-    
-    private void takeScreenshot()
+
+    /**
+     * Pren una captura del monitor i la desa a la ruta definida
+     * a la finestra
+     */
+    private void takeQuickScreenshot()
     {
         autocloseMainWindow();
         
@@ -220,12 +245,27 @@ public class MonitorMiniature {
         
         autocloseMainWindow();
     }
-    
+
+    private void takeScreenshot()
+    {
+        autocloseMainWindow();
+
+        TakeScreenshot.Do(monitorData);
+
+        autocloseMainWindow();
+    }
+
+    /**
+     * Recarrega la previsualització del monitor
+     */
     private void reloadMiniature()
     {
         monitorScreenshot.setImage(SwingFXUtils.toFXImage(monitorData.getScreenImage(), null));
     }
-    
+
+    /**
+     * Captura una regió del monitor
+     */
     private void captureRegion()
     {
         autocloseMainWindow();
@@ -308,9 +348,10 @@ public class MonitorMiniature {
                         captureRegion();
                         break;
                     case "btnScreenshot":
-                        takeScreenshot();
+                        takeQuickScreenshot();
                         break;
                     case "btnPopup":
+                        takeScreenshot();
                         break;
                     case "btnReload":
                         reloadMiniature();

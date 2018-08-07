@@ -29,19 +29,19 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label fx:id="lblAuthor" text="Author:">
+            <Label fx:id="lblAuthor" text="%label_author">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
             <Label text="Guillermo Espert Carrasquer   [gespert@yahoo.es]" GridPane.columnIndex="1" />
-            <Label fx:id="lblVersion" text="Version:" GridPane.rowIndex="1">
+            <Label fx:id="lblVersion" text="%label_version" GridPane.rowIndex="1">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
             <Label fx:id="lblAppVersion" text="\%APP_VERSION" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Label fx:id="lblLicense" text="License:" GridPane.rowIndex="2">
+            <Label fx:id="lblLicense" text="%label_lisence" GridPane.rowIndex="2">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>

@@ -17,6 +17,8 @@
 package org.gespert.gladivs.GUI.Stages;
 
 import java.io.IOException;
+import java.util.ResourceBundle;
+
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -33,6 +35,7 @@ public class AboutUsWindowCreator {
     
     private AboutUsDialogController auController;
     private Stage stage;
+    private ResourceBundle rs;
     
     /**
      * Crea una nova finestra de AboutUs
@@ -40,6 +43,7 @@ public class AboutUsWindowCreator {
     public void createNewWindow()
     {
         Parent root;
+        rs = ResourceBundle.getBundle("bundles.Main");
         
         try {
             final FXMLLoader loader = new FXMLLoader(
@@ -47,6 +51,7 @@ public class AboutUsWindowCreator {
             );
 
             //Load FXML file
+            loader.setResources(rs);
             root = (Parent) loader.load();
             
             //Obtenir el controller per a la finestra about us
@@ -54,7 +59,7 @@ public class AboutUsWindowCreator {
 
             //Configure and show window
             stage = new Stage();
-            stage.setTitle("About Us");
+            stage.setTitle(rs.getString("about_us_scene_window_title"));
             stage.getIcons().add(new Image(getClass().getResourceAsStream("/icons/icona_sense_sombra.png")));
             stage.setScene(new Scene(root, 450, 480));
             stage.initStyle(StageStyle.UTILITY);

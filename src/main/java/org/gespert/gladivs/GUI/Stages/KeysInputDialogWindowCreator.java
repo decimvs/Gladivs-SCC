@@ -17,6 +17,7 @@
 package org.gespert.gladivs.GUI.Stages;
 
 import java.io.IOException;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.fxml.FXMLLoader;
@@ -36,17 +37,20 @@ public class KeysInputDialogWindowCreator {
     
     private Stage kidStage;
     private KeysInputDialogController kidController;
+    private ResourceBundle rs;
     
     public void createNewWindow()
     {
         Parent root;
-        
+        rs = ResourceBundle.getBundle("bundles.Main");
+
         try {
             final FXMLLoader loader = new FXMLLoader(
                 getClass().getResource("/fxml/KeysInputDialog.fxml")
             );
 
             //Load FXML file
+            loader.setResources(rs);
             root = (Parent) loader.load();
             
             KeysInputDialogController kidController = loader.getController();
@@ -55,7 +59,7 @@ public class KeysInputDialogWindowCreator {
 
             //Configure and show window
             kidStage = new Stage();
-            kidStage.setTitle("Introduïr combinació de tecles");
+            kidStage.setTitle(rs.getString("keys_selection_window_title"));
             kidStage.getIcons().add(new Image(getClass().getResourceAsStream("/icons/icona_sense_sombra.png")));
             kidStage.setScene(new Scene(root));
             kidStage.initModality(Modality.WINDOW_MODAL);

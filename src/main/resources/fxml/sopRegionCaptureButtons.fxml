@@ -20,6 +20,9 @@
                      </image>
                   </ImageView>
                </graphic>
+               <tooltip>
+                  <Tooltip text="%capture_popup_save_default_location" />
+               </tooltip>
             </Button>
             <Button fx:id="btnSaveAs" mnemonicParsing="false">
                <graphic>
@@ -29,6 +32,9 @@
                      </image>
                   </ImageView>
                </graphic>
+               <tooltip>
+                  <Tooltip text="%capture_popup_save_to_selected_folder" />
+               </tooltip>
             </Button>
             <Button fx:id="btnSelectRegion" mnemonicParsing="false">
                <graphic>
@@ -38,6 +44,9 @@
                      </image>
                   </ImageView>
                </graphic>
+               <tooltip>
+                  <Tooltip text="%capture_popup_save_defined_region" />
+               </tooltip>
             </Button>
             <Button fx:id="btnReSelect" mnemonicParsing="false">
                <graphic>
@@ -47,6 +56,9 @@
                      </image>
                   </ImageView>
                </graphic>
+               <tooltip>
+                  <Tooltip text="%capture_popup_erase_selected_area" />
+               </tooltip>
             </Button>
             <Button fx:id="btnExit" mnemonicParsing="false">
                <graphic>
@@ -56,6 +68,9 @@
                      </image>
                   </ImageView>
                </graphic>
+               <tooltip>
+                  <Tooltip text="%capture_popup_close_capture_options" />
+               </tooltip>
             </Button>
          </children>
          <padding>

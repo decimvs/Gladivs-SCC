@@ -20,6 +20,7 @@ import org.gespert.gladivs.GUI.OptionsPopup.Controllers.ScreenshotOptionsPopupCo
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.io.IOException;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.EventHandler;
@@ -70,6 +71,7 @@ public class ScreenshotOptionsPopupCreator {
             loader = new FXMLLoader(
                     getClass().getResource("/fxml/ScreenshotOptionsPopup.fxml")
             );
+            loader.setResources(ResourceBundle.getBundle("bundles.Main"));
             
             //Inicialitzar les variables de finestra
             root = (Parent) loader.load();
@@ -87,6 +89,7 @@ public class ScreenshotOptionsPopupCreator {
             
             //Loader per als botons d'opcions
             FXMLLoader btnLoader = getLoadedFXMLForPopupMode();
+            btnLoader.setResources(ResourceBundle.getBundle("bundles.Main"));
          
             //Carregar i inicialitzar la finestra del popup d'opcions
             sopController = (ScreenshotOptionsPopupController) loader.getController();

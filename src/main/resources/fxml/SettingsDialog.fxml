@@ -38,7 +38,7 @@
                                           <RowConstraints minHeight="10.0" valignment="CENTER" vgrow="SOMETIMES" />
                                       </rowConstraints>
                                        <children>
-                                          <Label text="Directori  predeterminat per a desar les imatges" />
+                                          <Label text="%conf_conf_tab_label_directory_selection" />
                                           <TextField fx:id="txtDefaultDirectory" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="32.0" prefHeight="32.0" prefWidth="316.0" GridPane.columnIndex="1" />
                                           <Button fx:id="btnSelectDefaultDirectory" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" prefHeight="32.0" prefWidth="32.0" GridPane.columnIndex="2">
                                              <graphic>
@@ -49,18 +49,18 @@
                                                 </ImageView>
                                              </graphic>
                                           </Button>
-                                          <Label text="Idioma de la aplicació" GridPane.rowIndex="1" />
-                                          <CheckBox fx:id="cbxSearchForUpdates" mnemonicParsing="false" text="Activar verficació d'actualitzacions" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="2">
+                                          <Label text="%conf_conf_tab_label_interface_language" GridPane.rowIndex="1" />
+                                          <CheckBox fx:id="cbxSearchForUpdates" mnemonicParsing="false" text="%conf_conf_tab_checkbox_activate_update_search" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="2">
                                              <GridPane.margin>
                                                 <Insets left="1.0" />
                                              </GridPane.margin></CheckBox>
                                           <CheckBox fx:id="cbxActivateAutoupdate" mnemonicParsing="false" text="Activar la actualització automàtica" visible="false" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="2" />
-                                          <CheckBox fx:id="cbxAutocloseWindow" mnemonicParsing="false" text="Autotancar la finestra durant la captura" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="3">
+                                          <CheckBox fx:id="cbxAutocloseWindow" mnemonicParsing="false" text="%conf_conf_tab_checkbox_activate_autohide_window" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="3">
                                              <GridPane.margin>
                                                 <Insets left="1.0" />
                                              </GridPane.margin></CheckBox>
-                                          <Label text="Buscar actualitzacions" GridPane.rowIndex="2" />
-                                          <Label text="Autotancament de la finestra" GridPane.rowIndex="3" />
+                                          <Label text="%conf_conf_tab_label_search_for_updates" GridPane.rowIndex="2" />
+                                          <Label text="%conf_conf_tab_label_autohide_window" GridPane.rowIndex="3" />
                                           <ComboBox fx:id="cmbLanguages" prefHeight="32.0" prefWidth="316.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                        </children>
                                        <BorderPane.margin>
@@ -94,8 +94,8 @@
                                                 <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                                             </rowConstraints>
                                              <children>
-                                                <Label text="Captura de pantalla" />
-                                                <Label text="Captura de regió" GridPane.rowIndex="1" />
+                                                <Label text="%conf_keys_tab_label_take_screenshot" />
+                                                <Label text="%conf_keys_tab_label_region_capture" GridPane.rowIndex="1" />
                                                 <Button fx:id="btnSetMonitorCaptureKeys" mnemonicParsing="false" text="%conf_keys_tab_button_modify_keys" GridPane.columnIndex="2">
                                                    <GridPane.margin>
                                                       <Insets top="5.0" />
@@ -106,19 +106,19 @@
                                                    </GridPane.margin></Button>
                                                 <Label fx:id="lblCaptureMonitor" text="Label" GridPane.columnIndex="1" />
                                                 <Label fx:id="lblRegionCapture" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                                <Label text="Capturar l'última regió" GridPane.rowIndex="2" />
+                                                <Label text="%conf_keys_tab_label_capture_last_region" GridPane.rowIndex="2" />
                                                 <Label fx:id="lblLastRegionCapture" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                                 <Button fx:id="btnSetLastRegionCaptureKeys" mnemonicParsing="false" text="%conf_keys_tab_button_modify_keys" GridPane.columnIndex="2" GridPane.rowIndex="2">
                                                    <GridPane.margin>
                                                       <Insets top="5.0" />
                                                    </GridPane.margin></Button>
-                                                <Label text="Capturar regió preseleccionada" GridPane.rowIndex="4" />
+                                                <Label text="%conf_keys_tab_label_capture_preselected_region" GridPane.rowIndex="4" />
                                                 <Label fx:id="lblCaptureSelectedRegion" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                                                 <Button fx:id="btnSetCaptureSelectedRegionKeys" mnemonicParsing="false" text="%conf_keys_tab_button_modify_keys" GridPane.columnIndex="2" GridPane.rowIndex="4">
                                                    <GridPane.margin>
                                                       <Insets top="5.0" />
                                                    </GridPane.margin></Button>
-                                                <Label text="Seleccionar una regió" GridPane.rowIndex="3" />
+                                                <Label text="%conf_keys_tab_label_select_region" GridPane.rowIndex="3" />
                                                 <Label fx:id="lblSelectRegionKeys" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                                 <Button fx:id="btnSetSelectRegionKeys" mnemonicParsing="false" text="%conf_keys_tab_button_modify_keys" GridPane.columnIndex="2" GridPane.rowIndex="3">
                                                    <GridPane.margin>

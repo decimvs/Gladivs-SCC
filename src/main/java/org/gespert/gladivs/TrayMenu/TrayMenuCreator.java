@@ -29,6 +29,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
+
 import javafx.application.Platform;
 import org.gespert.gladivs.Instances.SettingsInstance;
 import org.gespert.gladivs.Instances.Windows;
@@ -45,6 +47,7 @@ public class TrayMenuCreator {
     private SystemTray tray;
     private TrayIcon trayIcon;
     private PopupMenu popupMenu;
+    private ResourceBundle rs;
     
     /*  MenuItem DefineCapureRegion */
     private PopupMenu smDefinedCaptureArea;
@@ -60,6 +63,8 @@ public class TrayMenuCreator {
    
     public void displayIconInTray()
     {
+        rs = ResourceBundle.getBundle("bundles.Main");
+
         //Obtenir la instància SystemTray de l'aplicació
         tray = SystemTray.getSystemTray();
         
@@ -104,17 +109,17 @@ public class TrayMenuCreator {
         popupMenu = new PopupMenu();
         
         //Menu capturar monitor
-        smCaptureMonitor = new PopupMenu("Capture monitor");
+        smCaptureMonitor = new PopupMenu(rs.getString("system_tray_menu_capture_monitor"));
         
         //Menu capturar regió
-        smCaptureRegion = new PopupMenu("Capture region");
+        smCaptureRegion = new PopupMenu(rs.getString("system_tray_menu_capture_region"));
      
         //MenuItem Open GladivsSSC Window
-        MenuItem settingsWindowItem = new MenuItem("Settings");
+        MenuItem settingsWindowItem = new MenuItem(rs.getString("system_tray_menu_settings"));
         settingsWindowItem.addActionListener(settingsWindowListener);
         
         //MenúItem Exit
-        MenuItem exitItem = new MenuItem("Exit");
+        MenuItem exitItem = new MenuItem(rs.getString("system_tray_menu_exit"));
         exitItem.addActionListener(exitListener);
         
         //Afegir elements al popup
@@ -138,7 +143,7 @@ public class TrayMenuCreator {
     
     private MenuItem getMainWindowMenuItem()
     {
-        MenuItem mainWindow = new MenuItem("Open main window");
+        MenuItem mainWindow = new MenuItem(rs.getString("system_tray_menu_open_main_window"));
         mainWindow.addActionListener(mainWindowListener);
         
         return mainWindow;
@@ -151,7 +156,7 @@ public class TrayMenuCreator {
     
     private MenuItem getAboutUsMenuItem()
     {
-        MenuItem aboutUs = new MenuItem("About Us");
+        MenuItem aboutUs = new MenuItem(rs.getString("system_tray_menu_about_us"));
         aboutUs.addActionListener(aboutUsDialogListener);
         
         return aboutUs;
@@ -159,21 +164,21 @@ public class TrayMenuCreator {
     
     private MenuItem getHelpMenuItem()
     {
-        MenuItem help = new MenuItem("Help");
+        MenuItem help = new MenuItem(rs.getString("system_tray_menu_help"));
         
         return help;
     }
     
     private PopupMenu createSelectPredefinedAreaPopupMenu()
     {
-        smDefinedCaptureArea = new PopupMenu("Predefined capture area");
+        smDefinedCaptureArea = new PopupMenu(rs.getString("system_tray_menu_predefined_capture_area"));
         
-        smDefineAreaMonitor = new PopupMenu("Define area in monitor");
+        smDefineAreaMonitor = new PopupMenu(rs.getString("system_tray_menu_define_monitor_area"));
         
-        miViewDefinedArea = new MenuItem("View selected area");
+        miViewDefinedArea = new MenuItem(rs.getString("system_tray_menu_view_selected_area"));
         miViewDefinedArea.addActionListener(viewSelectedAreaListener);
         
-        miDeleteDefinedArea = new MenuItem("Delete selected area");
+        miDeleteDefinedArea = new MenuItem(rs.getString("system_tray_menu_delete_selected_area"));
         miDeleteDefinedArea.addActionListener(deleteSelectedArea);
         
         smDefinedCaptureArea.add(smDefineAreaMonitor);
@@ -216,7 +221,7 @@ public class TrayMenuCreator {
         
         for(MonitorData monitor : monitors)
         {
-            GMenuItem item = new GMenuItem("Monitor " + i, monitor, action);
+            GMenuItem item = new GMenuItem(rs.getString("system_tray_menu_text_component_monitor") + " " + i, monitor, action);
             item.addActionListener(onMonitorMenuItemClick);
             popup.add(item);
             

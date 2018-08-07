@@ -8,8 +8,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane id="AnchorPane" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="org.gespert.gladivs.GUI.OptionsPopup.Controllers.CaptureMonitorOptionButtons">
+<AnchorPane id="AnchorPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gespert.gladivs.GUI.OptionsPopup.Controllers.CaptureMonitorOptionButtons">
    <children>
       <VBox alignment="TOP_CENTER" layoutX="20.0" layoutY="47.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -21,6 +20,9 @@
                      </image>
                   </ImageView>
                </graphic>
+               <tooltip>
+                  <Tooltip text="%capture_popup_save_default_location" />
+               </tooltip>
             </Button>
             <Button fx:id="btnSaveAs" mnemonicParsing="false">
                <graphic>
@@ -30,6 +32,9 @@
                      </image>
                   </ImageView>
                </graphic>
+               <tooltip>
+                  <Tooltip text="%capture_popup_save_to_selected_folder" />
+               </tooltip>
             </Button>
             <Button fx:id="btnExit" mnemonicParsing="false">
                <graphic>
@@ -39,6 +44,9 @@
                      </image>
                   </ImageView>
                </graphic>
+               <tooltip>
+                  <Tooltip text="%capture_popup_close_capture_options" />
+               </tooltip>
             </Button>
          </children>
          <padding>

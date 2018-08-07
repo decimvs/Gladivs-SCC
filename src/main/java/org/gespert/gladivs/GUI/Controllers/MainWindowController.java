@@ -24,7 +24,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -60,7 +59,7 @@ public class MainWindowController implements Initializable {
     private Hyperlink hlkDownloadUpdate;
     
     private ResourceBundle rb;
-    private String defaultLanguage;    
+    private String defaultLanguage;
     private VersionData versionData;
 
     @Override
@@ -82,41 +81,17 @@ public class MainWindowController implements Initializable {
      */
     public void postInicilizationActions()
     {
-        //Setting default language if users has selected one
-        if(defaultLanguage != null)
-        {
-            Locale.setDefault(new Locale(defaultLanguage));
-        }
-        
         //Load with default locale (set or by user o JVM default if not is set by user)
         this.rb = ResourceBundle.getBundle("bundles.Main");
 
         //Populate monitor pane
         populateMonitorContainer();
         
-        //Translate UI
-        translateUI();
-        
-        //Set the tooltips for some UI elements
-        setUiElementsToolTips();
-        
         //Verifica si la aplicació està actualitzada
         checkForUpdates();
         
         //Establir la ruta de la carpeta seleccionada per a desar les imatges
         lblFolder.setText(SettingsInstance.getGeneralSettings().getUserSelectedImagesSavePath());
-    }
-    
-    /**
-     * Translate texts in UI elemnts for the current Locale
-     */
-    private void translateUI()
-    {
-        //Set UI strings
-        txtSelectWhatMonitors.setText(rb.getString("select_what_monitors_you_want_to_capture"));
-        
-        //Recalculate UI size to arrange all elements inside
-        Windows.getMainWindow().getStage().sizeToScene();
     }
     
     /**
@@ -131,13 +106,13 @@ public class MainWindowController implements Initializable {
             if(versionData != null)
             {
                 hlkDownloadUpdate.setVisible(true);
-                hlkDownloadUpdate.setText("New version of GladivsSC available: " + versionData.getLatest_version());
+                hlkDownloadUpdate.setText(rb.getString("main_window_updates_notifier_new_version") + " " + versionData.getLatest_version());
                 lblUpdateInfo.setVisible(false);
             }
             else
             {
                 lblUpdateInfo.setVisible(true);
-                lblUpdateInfo.setText("Your application is up to date");
+                lblUpdateInfo.setText(rb.getString("main_window_updates_notifier_up_to_date"));
                 hlkDownloadUpdate.setVisible(false);
             }
         }
@@ -146,12 +121,6 @@ public class MainWindowController implements Initializable {
             lblUpdateInfo.setVisible(false);
             hlkDownloadUpdate.setVisible(false);
         }
-    }
-    
-    private void setUiElementsToolTips()
-    {
-        btnAboutUs.setTooltip(new Tooltip(rb.getString("button_about_us_tooltip")));
-        btnHelp.setTooltip(new Tooltip(rb.getString("button_help_tooltip")));
     }
     
     private void populateMonitorContainer()

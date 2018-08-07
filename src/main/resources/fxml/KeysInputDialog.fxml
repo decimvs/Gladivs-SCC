@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.net.*?>
@@ -8,18 +9,32 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="193.0" prefWidth="300.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gespert.gladivs.GUI.Controllers.KeysInputDialogController">
+<AnchorPane id="AnchorPane" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.gespert.gladivs.GUI.Controllers.KeysInputDialogController">
     <stylesheets>
         <URL value="@/styles/Styles.css" />
     </stylesheets>
    <children>
-      <Text layoutX="13.0" layoutY="71.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tecleja a continuació les tecles que vols usar per a esta funció" wrappingWidth="275.0" />
-      <Text layoutX="72.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Sel·lecció de tecles">
-         <font>
-            <Font name="System Bold" size="18.0" />
-         </font>
-      </Text>
-      <Button fx:id="btnCancelar" layoutX="224.0" layoutY="154.0" mnemonicParsing="false" text="Cancelar" />
-      <Label fx:id="lblTecles" layoutX="14.0" layoutY="107.0" prefHeight="17.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" />
+      <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="15.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="%keys_selection_content_caption">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Text>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="%keys_selection_content_text" wrappingWidth="300.0" />
+            <Label fx:id="lblTecles" prefHeight="17.0" />
+         </children>
+         <padding>
+            <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+         </padding>
+      </VBox>
+      <VBox alignment="BOTTOM_CENTER" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <Button fx:id="btnCancelar" mnemonicParsing="false" text="%keys_selection_cancel_button" />
+         </children>
+         <padding>
+            <Insets bottom="15.0" />
+         </padding>
+      </VBox>
    </children>
 </AnchorPane>

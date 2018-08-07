@@ -17,6 +17,8 @@
 package org.gespert.gladivs.GUI.Stages;
 
 import java.io.IOException;
+import java.util.ResourceBundle;
+
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -45,6 +47,7 @@ public class MainWindowCreator {
         Parent root;
         
         try {
+            loader.setResources(ResourceBundle.getBundle("bundles.Main"));
             root = (Parent) loader.load();
             
             Font.loadFont(getClass().getResourceAsStream("/fonts/OpenSans-Bold.ttf"), 16);

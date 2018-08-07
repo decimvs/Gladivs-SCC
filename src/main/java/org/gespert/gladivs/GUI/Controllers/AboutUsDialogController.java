@@ -28,25 +28,15 @@ import org.gespert.gladivs.MainApp;
  * @author Guillermo Espert Carrasquer <gespert at yahoo dot es>
  */
 public class AboutUsDialogController implements Initializable {
-    
+
     @FXML
-    private Label lblAppVersion, lblAuthor, lblVersion, lblLicense;
+    private Label lblAppVersion;
     
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rbs) {
-        
-        lblAuthor.setText("Author");
-        lblVersion.setText("Version");
-        lblLicense.setText("Lisence");
-        
-        setApplicationVersionText();
-    }    
-    
-    public void setApplicationVersionText(){
         lblAppVersion.setText(MainApp.APP_VERSION);
     }
-    
 }

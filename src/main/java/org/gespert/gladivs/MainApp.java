@@ -32,6 +32,9 @@ import org.gespert.gladivs.TrayMenu.CheckForUpdates;
 public class MainApp extends Application {
     
     public static final String APP_VERSION = "0.7";
+    public static final Integer APP_MAJOR_VERSION = 0;
+    public static final Integer APP_MINUS_VERSION = 7;
+    public static final Integer APP_REVISION_VERSION = 0;
     public static final String APP_NAME = "Gladivs Screen Capture";
     public static final String APP_AUTHOR = "Guillermo Espert Carrasquer";
     

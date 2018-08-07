@@ -17,6 +17,8 @@
 package org.gespert.gladivs.TrayMenu;
 
 import java.awt.TrayIcon;
+import java.util.ResourceBundle;
+
 import org.gespert.gladivs.Instances.SystemTray;
 import org.gespert.gladivs.VersionChecker.VersionChecker;
 import org.gespert.gladivs.VersionChecker.VersionData;
@@ -30,10 +32,11 @@ public class CheckForUpdates {
      public static void checkForUpdates()
      {
          VersionData vd = VersionChecker.checkForUpdates();
+         ResourceBundle rb = ResourceBundle.getBundle("bundles.Main");
          
          if(vd != null)
          {
-             SystemTray.getInstance().getTrayIcon().displayMessage("Updates found", "There is a new version of Gladivs Screen Capture. Open the main window to get info.", TrayIcon.MessageType.INFO);
+             SystemTray.getInstance().getTrayIcon().displayMessage(rb.getString("check_for_updates_notification_title"), rb.getString("check_for_updates_notification_text"), TrayIcon.MessageType.INFO);
          }
      }
 }

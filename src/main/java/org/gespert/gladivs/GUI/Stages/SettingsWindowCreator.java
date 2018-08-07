@@ -33,10 +33,12 @@ public class SettingsWindowCreator {
     
     private Stage sdStage;
     private SettingsDialogController sdController;
+    private ResourceBundle rs;
     
     public void createNewWindow()
     {
         Parent root;
+        rs = ResourceBundle.getBundle("bundles.Main");
         
         try {
             final FXMLLoader loader = new FXMLLoader(
@@ -44,7 +46,7 @@ public class SettingsWindowCreator {
             );
             
             //Carreguem el fitxer de llengua que corresponga
-            loader.setResources(ResourceBundle.getBundle("bundles.Main"));
+            loader.setResources(rs);
             
             //Load FXML file
             root = (Parent) loader.load();
@@ -53,7 +55,7 @@ public class SettingsWindowCreator {
 
             //Configure and show window
             sdStage = new Stage();
-            sdStage.setTitle("Settings");
+            sdStage.setTitle(rs.getString("conf_window_title"));
             sdStage.getIcons().add(new Image(getClass().getResourceAsStream("/icons/icona_sense_sombra.png")));
             sdStage.setScene(new Scene(root));
             

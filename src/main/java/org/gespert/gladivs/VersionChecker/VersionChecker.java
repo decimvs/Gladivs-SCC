@@ -17,9 +17,10 @@
 package org.gespert.gladivs.VersionChecker;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.gespert.gladivs.MainApp;
+
 import java.io.IOException;
 import java.net.URL;
-import org.gespert.gladivs.MainApp;
 
 /**
  *
@@ -34,14 +35,25 @@ public class VersionChecker {
         try {
             VersionData latest = mapper.readValue(new URL("https://updates.gladivs.com/versioncheck/GladivsSC"), VersionData.class);
 
-            if(latest.getLatest_version().equals(MainApp.APP_VERSION))
+            if(latest.getMajor_version() > MainApp.APP_MAJOR_VERSION)
             {
-                return null;
-            } else {
                 return latest;
+            } else {
+                if(latest.getMinor_version() > MainApp.APP_MINUS_VERSION && latest.getMajor_version() == MainApp.APP_MAJOR_VERSION)
+                {
+                    return latest;
+                } else {
+                    if(latest.getRevision_version() > MainApp.APP_REVISION_VERSION && latest.getMajor_version() == MainApp.APP_MAJOR_VERSION && latest.getMinor_version() == MainApp.APP_MINUS_VERSION)
+                    {
+                        return latest;
+                    } else {
+                        return null;
+                    }
+                }
             }
 
         } catch (IOException ex) {
+            ex.printStackTrace();
             return null;
         }
     }
