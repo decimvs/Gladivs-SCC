@@ -16,13 +16,11 @@
  */
 package org.gespert.gladivs.Screenshots;
 
-import java.awt.AWTException;
-import java.awt.Point;
-import java.awt.Rectangle;
-import java.awt.Robot;
-import java.awt.image.BufferedImage;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.jitsi.impl.neomedia.imgstreaming.ScreenCapture;
+
+import java.awt.*;
+import java.awt.color.ColorSpace;
+import java.awt.image.*;
 
 /**
  *
@@ -86,15 +84,45 @@ public class MonitorData {
     {
         monitorIndex = index;
     }
-    
+
+    /**
+     * Esta funció es la encarregada d'obtenir la captura de la pantalla.
+     * Utilitza una classe envoltori en JNI per a fer la captura a nivell
+     * natiu amb unes llibreries especifiques per a cada sistema.
+     * @return
+     */
     public BufferedImage getScreenImage()
     {
-        try {
-            return new Robot().createScreenCapture(getMonitorRectangle());
-        } catch (AWTException ex) {
-            Logger.getLogger(TakeScreenshot.class.getName()).log(Level.SEVERE, null, ex);
+        int x, y, width, height;
+
+        if(areaRectangle == null)
+        {
+            x = 0;
+            y = 0;
+            width = monitorRectangle.width;
+            height = monitorRectangle.height;
+        } else {
+            x = ((Double) areaRectangle.getX()).intValue();
+            y = ((Double) areaRectangle.getY()).intValue();
+            width = ((Double) areaRectangle.getWidth()).intValue();
+            height = ((Double) areaRectangle.getHeight()).intValue();
         }
-        
-        return null;
+
+        byte[] output = new byte[width*height*4];
+
+        if (ScreenCapture.grabScreen(monitorIndex,x, y, width, height, output)) {
+            System.out.println("OK");
+        } else {
+            System.out.println("Error");
+        }
+
+        ColorSpace cs = ColorSpace.getInstance(ColorSpace.CS_sRGB);
+        int[] nBits = {8, 8, 8, 8};
+        int[] bOffs = {1, 2, 3, 0};
+        ColorModel colorModel = new ComponentColorModel(cs, nBits, true, true, Transparency.TRANSLUCENT, DataBuffer.TYPE_BYTE);
+        DataBuffer buffer = new DataBufferByte(output, output.length);
+        WritableRaster raster = Raster.createInterleavedRaster(buffer, width, height, width*4, 4, bOffs, null);
+
+        return new BufferedImage(colorModel, raster, colorModel.isAlphaPremultiplied(), null);
     }
 }
