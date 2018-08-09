@@ -54,6 +54,10 @@ public class MainApp extends Application {
         
         //Establim la llengua predeterminada
         String languageCode = SettingsInstance.getGeneralSettings().getInterfaceLanguage();
+
+        //Establim el directori predeterminat per a les biblioteques
+        //System.setProperty("java.library.path", "D:\\GladivsLib");
+        System.out.println("Directori de llibreries establit a: " + System.getProperty("java.library.path"));
         
         if(languageCode != null && !languageCode.equals("null"))
         {
